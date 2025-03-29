@@ -14,40 +14,25 @@ import java.io.*;
 
 public class Main {
     public static void main(String [] args) throws JAXBException {
-//        Dragons dragons = new TestCollectionBuilder().getCollection();
+        Dragons dragons = new TestCollectionBuilder().getCollection();
 
-//        System.out.println(DragonsXmlConverter.toXml(dragons) + "dfb");
-        System.out.println("dthdhnfcgj");
+        CommandsManager commands = new CommandsManager();
+        commands.addCommand(new ExitCommand());
+        commands.addCommand(new EchoCommand());
 
-//        CommandsManager commands = new CommandsManager();
-//        commands.addCommand(new ExitCommand());
-//        commands.addCommand(new EchoCommand());
-//
-//        Reader reader = new InputStreamReader(System.in);
-//        PrintStream writer = System.out;
-//        try (reader; writer) {
-//            TextStreamManager console = new TextStreamManager(reader, writer);
-//            while (true) {
-//                try {
-//                    commands.execute(console.input("> "));
-//                } catch (IncorrectCommandException exception) {
-//                    System.out.println(exception.getMessage());
-//                }
-//            }
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-
-//        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-//            while (true) {
-//                try {
-//                    commands.execute(reader.readLine());
-//                } catch (IncorrectCommandException exception) {
-//                    System.out.println(exception.getMessage());
-//                }
-//            }
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
+        Reader reader = new InputStreamReader(System.in);
+        PrintStream writer = System.out;
+        try (reader; writer) {
+            TextStreamManager console = new TextStreamManager(reader, writer);
+            while (true) {
+                try {
+                    commands.execute(console.input("> "));
+                } catch (IncorrectCommandException exception) {
+                    System.out.println(exception.getMessage());
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
