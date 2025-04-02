@@ -13,9 +13,7 @@ public class TestCollectionBuilder implements CollectionBuilder{
         Dragon dragon = new Dragon();
         dragon.setId((Long) 1L);
         dragon.setName("Smaug");
-        dragon.setCoordinates(new Coordinates());
-        dragon.getCoordinates().setX(68.648f);
-        dragon.getCoordinates().setY(68.648f);
+        dragon.setCoordinates(new Coordinates(68.648f, 684f));
         dragon.setCreationDate(ZonedDateTime.now());
         dragon.setAge(100);
         dragon.setDescription("A fearsome dragon");
@@ -30,10 +28,21 @@ public class TestCollectionBuilder implements CollectionBuilder{
         killer.setLocation(new Location());
         killer.getLocation().setName("Lake-town");
         killer.getLocation().setX(10);
-        killer.getLocation().setY(20);
+//        killer.getLocation().setY(20);
 
         dragon.setKiller(killer);
         dragons.add(dragon);
+
+        Dragon toothless = new Dragon();
+        toothless.setId(2L);
+        toothless.setName("Беззубик");
+        toothless.setCoordinates(new Coordinates(45.7f, 88.2f));
+        toothless.setCreationDate(ZonedDateTime.now());
+        toothless.setAge(15);
+        toothless.setDescription("Ночная фурия, очень дружелюбный");
+        toothless.setWeight(350.0f);
+        toothless.setCharacter(DragonCharacter.CHAOTIC);
+        dragons.add(toothless);
 
         return dragons;
     }

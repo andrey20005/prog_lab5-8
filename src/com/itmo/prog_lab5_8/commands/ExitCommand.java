@@ -1,6 +1,9 @@
 package com.itmo.prog_lab5_8.commands;
 
+import com.itmo.prog_lab5_8.utils.io.TextIO;
+
 public class ExitCommand implements Command{
+    public boolean running = true;
     @Override
     public String getName() {
         return "exit";
@@ -8,7 +11,7 @@ public class ExitCommand implements Command{
 
     @Override
     public String getDescription() {
-        return "`exit: завершить программу (без сохранения в файл)";
+        return "exit: завершить программу (без сохранения в файл)";
     }
 
     @Override
@@ -17,7 +20,8 @@ public class ExitCommand implements Command{
     }
 
     @Override
-    public void execute(String command) {
-        System.exit(0);
+    public void execute(String command, TextIO textIO) {
+        running = false;
+//        System.exit(0);
     }
 }

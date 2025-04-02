@@ -1,5 +1,7 @@
 package com.itmo.prog_lab5_8.commands;
 
+import com.itmo.prog_lab5_8.utils.io.TextIO;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -17,12 +19,12 @@ public class CommandsManager {
     }
 
     private final Pattern commandNamePattern = Pattern.compile("^(\\w+)( +|$)");
-    public void execute(String command) throws IncorrectCommandException {
+    public void execute(String command, TextIO textIO) throws IncorrectCommandException {
         Matcher commandNameMatcher = commandNamePattern.matcher(command);
         if (commandNameMatcher.find()) {
             String commandName = commandNameMatcher.group(1);
             if (commands.containsKey(commandName)) {
-                commands.get(commandName).execute(command);
+                commands.get(commandName).execute(command, textIO);
             } else {
                 throw new IncorrectCommandException(command, "Комманда " + commandName + " не найдена.");
             }

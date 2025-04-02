@@ -6,8 +6,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Location {
     private int x;
-    private Integer y; //Поле не может быть null
-    private String name; //Строка не может быть пустой, Поле может быть null
+    private Integer y = 0; //Поле не может быть null
+    private String name = "not named"; //Строка не может быть пустой, Поле может быть null
+
+    public Location() {}
+
+    public Location(int x, int y, String name) {
+        setX(x);
+        setY(y);
+        setName(name);
+    }
 
     public int getX() {
         return x;

@@ -1,10 +1,13 @@
 package com.itmo.prog_lab5_8.commands;
 
+import com.itmo.prog_lab5_8.utils.io.TextIO;
+
 public class EchoCommand implements Command {
     @Override
-    public void execute(String command) {
+    public void execute(String command, TextIO textIO) {
         if (command.length() > getName().length() + 1) {
-            System.out.println(command.substring(getName().length() + 1));
+            textIO.println(command.substring(getName().length() + 1));
+//            System.out.println(command.substring(getName().length() + 1));
         }
     }
 
@@ -15,7 +18,7 @@ public class EchoCommand implements Command {
 
     @Override
     public String getDescription() {
-        return "Эхо";
+        return "echo: копирует введенный текст";
     }
 
     @Override

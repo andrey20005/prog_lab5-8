@@ -1,4 +1,4 @@
-package com.itmo.prog_lab5_8.utils;
+package com.itmo.prog_lab5_8.utils.io;
 
 import org.jetbrains.annotations.NotNull;
 

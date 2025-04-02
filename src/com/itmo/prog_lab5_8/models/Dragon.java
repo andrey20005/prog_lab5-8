@@ -23,6 +23,21 @@ public class Dragon implements Comparable<Dragon> {
     private Person killer; //Поле может быть null
 
     @Override
+    public String toString() {
+        return "Dragon{" +
+                "\n\tid=" + id +
+                ", \n\tname='" + name + '\'' +
+                ", \n\tcoordinates=" + coordinates +
+                ", \n\tcreationDate=" + creationDate +
+                ", \n\tage=" + age +
+                ", \n\tdescription='" + description + '\'' +
+                ", \n\tweight=" + weight +
+                ", \n\tcharacter=" + character +
+                ", \n\tkiller=" + killer +
+                "\n}";
+    }
+
+    @Override
     public int compareTo(@NotNull Dragon o) {
         return Float.compare(weight, o.weight);
     }

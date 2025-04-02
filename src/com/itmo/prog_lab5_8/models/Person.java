@@ -11,6 +11,27 @@ public class Person {
     private Color hairColor; //Поле может быть null
     private Location location; //Поле не может быть null
 
+    public Person() {}
+
+    public Person(String name, double height, Color eyeColor, Color hairColor, Location location) {
+        setName(name);
+        setHeight(height);
+        setEyeColor(eyeColor);
+        setHairColor(hairColor);
+        setLocation(location);
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", height=" + height +
+                ", eyeColor=" + eyeColor +
+                ", hairColor=" + hairColor +
+                ", location=" + location +
+                '}';
+    }
+
     public String getName() {
         return name;
     }
