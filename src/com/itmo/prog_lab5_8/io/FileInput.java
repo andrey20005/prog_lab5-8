@@ -1,4 +1,4 @@
-package com.itmo.prog_lab5_8.utils.io;
+package com.itmo.prog_lab5_8.io;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -15,8 +15,12 @@ public class FileInput implements TextInput{
     }
 
     @Override
-    public boolean ready() throws IOException {
-        return reader.ready();
+    public boolean ready() {
+        try {
+            return reader.ready();
+        } catch (IOException e) {
+            return false;
+        }
     }
 
     @Override

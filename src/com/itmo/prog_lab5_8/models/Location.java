@@ -17,6 +17,15 @@ public class Location {
         setName(name);
     }
 
+    @Override
+    public String toString() {
+        return "Location{" +
+                "x=" + x +
+                ", y=" + y +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
     public int getX() {
         return x;
     }

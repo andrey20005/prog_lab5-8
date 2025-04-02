@@ -1,4 +1,4 @@
-package com.itmo.prog_lab5_8.utils.io;
+package com.itmo.prog_lab5_8.io;
 
 import java.io.BufferedReader;
 import java.io.IOException;

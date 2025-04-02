@@ -1,20 +1,22 @@
 package com.itmo.prog_lab5_8.сollection;
 
 import com.itmo.prog_lab5_8.models.Dragon;
+import com.itmo.prog_lab5_8.models.ZonedDateTimeAdapter;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.nio.file.Path;
 import java.time.ZonedDateTime;
 import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Objects;
 
-@XmlRootElement(name = "dragons")
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Dragons {
-    @XmlElement(name = "dragon")
+    private ZonedDateTime creationTime = ZonedDateTime.now();
+    private String path;
     private Collection<Dragon> dragons = new ArrayDeque<>();
 
     public Collection<Dragon> getDragons() {
@@ -49,5 +51,21 @@ public class Dragons {
             if (newDragon.compareTo(dragon) < 0) flag = false;
         }
         if (flag) add(newDragon);
+    }
+
+    public void setCreationTime(ZonedDateTime creationTime) {
+        this.creationTime = creationTime;
+    }
+
+    public ZonedDateTime getCreationTime() {
+        return creationTime;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

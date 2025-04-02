@@ -1,6 +1,6 @@
 package com.itmo.prog_lab5_8.commands;
 
-import com.itmo.prog_lab5_8.utils.io.TextIO;
+import com.itmo.prog_lab5_8.io.TextIO;
 
 import java.util.HashMap;
 import java.util.Map;

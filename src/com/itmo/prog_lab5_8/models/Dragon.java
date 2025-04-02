@@ -8,7 +8,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.ZonedDateTime;
 
-@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Dragon implements Comparable<Dragon> {
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
@@ -21,6 +20,9 @@ public class Dragon implements Comparable<Dragon> {
     private Float weight; //Значение поля должно быть больше 0, Поле не может быть null
     private DragonCharacter character; //Поле может быть null
     private Person killer; //Поле может быть null
+
+    // нужно для jaxb
+    public Dragon() {}
 
     @Override
     public String toString() {

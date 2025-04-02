@@ -1,28 +1,46 @@
 package com.itmo.prog_lab5_8;
 
 import com.itmo.prog_lab5_8.commands.*;
-import com.itmo.prog_lab5_8.models.Dragon;
+import com.itmo.prog_lab5_8.io.Console;
+import com.itmo.prog_lab5_8.io.TextIO;
 import com.itmo.prog_lab5_8.utils.DragonsXmlConverter;
-import com.itmo.prog_lab5_8.utils.io.Console;
-import com.itmo.prog_lab5_8.utils.io.TextIO;
-import com.itmo.prog_lab5_8.utils.io.TextStreamManager;
 import com.itmo.prog_lab5_8.сollection.Dragons;
-import com.itmo.prog_lab5_8.сollection.TestCollectionBuilder;
+import com.itmo.prog_lab5_8.сollection.IncorrectObjectException;
 
 import javax.xml.bind.JAXBException;
 import java.io.*;
 
 public class Main {
-    public static void main(String [] args) throws JAXBException, IOException {
-        Dragons dragons = new TestCollectionBuilder().getCollection();
-//        System.out.println(DragonsXmlConverter.toXml(DragonsXmlConverter.fromXML(DragonsXmlConverter.toXml(dragons))));
+    public static void main(String [] args) throws IOException {
+        Dragons dragons = new Dragons();
+        boolean isOpen = false;
+        if (args.length == 1 && new File(args[0]).exists()) {
+            try {
+                dragons = DragonsXmlConverter.fromXMLFile(".testFiles/test.xml");
+                System.out.println("Файл открыт");
+                isOpen = true;
+            } catch (JAXBException e) {
+                System.out.println("у данных в файле некорректный формат");
+                System.exit(0);
+            } catch (IncorrectObjectException e) {
+                System.out.println("данные в файле некорректны");
+                System.out.println(e.getMessage());
+                System.exit(0);
+            }
+        }
+        if (args.length == 1 && !new File(args[0]).exists()) {
+            System.out.println("будет создан новый файл");
+        }
+        if (args.length != 1) {
+            System.out.println("нужно ввести путь до файла");
+        }
 
         CommandsManager commands = new CommandsManager();
         ExitCommand exitCommand = new ExitCommand();
         commands.addCommand(exitCommand);
-        commands.addCommand(new EchoCommand());
         commands.addCommand(new HelpCommand(commands));
         commands.addCommand(new ShowCommand(dragons));
+        commands.addCommand(new InfoCommand(dragons));
 
         TextIO console = new Console();
         while (exitCommand.running) {
