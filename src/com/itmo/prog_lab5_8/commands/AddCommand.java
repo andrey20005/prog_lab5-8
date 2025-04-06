@@ -5,7 +5,6 @@ import com.itmo.prog_lab5_8.models.DragonCharacter;
 import com.itmo.prog_lab5_8.utils.Asker;
 import com.itmo.prog_lab5_8.сollection.Dragons;
 
-import javax.imageio.IIOException;
 import java.io.IOException;
 
 public class AddCommand implements Command {
@@ -41,7 +40,7 @@ public class AddCommand implements Command {
             DragonCharacter character = DragonCharacter.valueOf(Asker.ask(
                     "character: ",
                     textIO,
-                    (text) -> Asker.isConverted(text, DragonCharacter::valueOf)
+                    Asker.isConverted(DragonCharacter::valueOf)
             ));
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -27,13 +27,15 @@ public class Asker {
         return matcher.find();
     }
 
-    public static boolean isConverted(String text, Function<String, ?> converter) {
-        try {
-            converter.apply(text);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+    public static Predicate<String> isConverted(Function<String, ?> converter) {
+        return (String text) -> {
+            try {
+                converter.apply(text);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        };
     }
 
     public static boolean isNumber(String text) {
