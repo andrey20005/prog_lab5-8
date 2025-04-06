@@ -1,14 +1,7 @@
 package com.itmo.prog_lab5_8.сollection;
 
 import com.itmo.prog_lab5_8.models.Dragon;
-import com.itmo.prog_lab5_8.models.ZonedDateTimeAdapter;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import java.nio.file.Path;
 import java.time.ZonedDateTime;
 import java.util.ArrayDeque;
 import java.util.Collection;
@@ -23,13 +16,13 @@ public class Dragons {
         return dragons;
     }
 
-    public void setDragons(Collection<Dragon> dragons) throws IncorrectObjectException {
+    public void setDragons(Collection<Dragon> dragons) throws IncorrectInputException {
         for (Dragon dragon : dragons) {
             int counter = 0;
             for (Dragon dragon1 : dragons) {
                 if (Objects.equals(dragon.getId(), dragon1.getId())) counter++;
             }
-            if (counter >= 2) throw new IncorrectObjectException("Все индексы должны быть уникальными");
+            if (counter >= 2) throw new IncorrectInputException("Все индексы должны быть уникальными");
         }
         this.dragons = dragons;
     }
@@ -38,14 +31,14 @@ public class Dragons {
         return dragons.toArray().length;
     }
 
-    public void add(Dragon newDragon) throws IncorrectObjectException {
+    public void add(Dragon newDragon) throws IncorrectInputException {
         for (Dragon dragon : dragons) {
-            if (dragon.getId().equals(newDragon.getId())) throw new IncorrectObjectException("Дракон с этим id уже существует");
+            if (dragon.getId().equals(newDragon.getId())) throw new IncorrectInputException("Дракон с этим id уже существует");
         }
         dragons.add(newDragon);
     }
 
-    public void addIfMin(Dragon newDragon) throws IncorrectObjectException {
+    public void addIfMin(Dragon newDragon) throws IncorrectInputException {
         boolean flag = true;
         for (Dragon dragon : dragons) {
             if (newDragon.compareTo(dragon) < 0) flag = false;

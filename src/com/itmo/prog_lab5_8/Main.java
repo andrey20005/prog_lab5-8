@@ -5,7 +5,7 @@ import com.itmo.prog_lab5_8.io.Console;
 import com.itmo.prog_lab5_8.io.TextIO;
 import com.itmo.prog_lab5_8.utils.DragonsXmlConverter;
 import com.itmo.prog_lab5_8.сollection.Dragons;
-import com.itmo.prog_lab5_8.сollection.IncorrectObjectException;
+import com.itmo.prog_lab5_8.сollection.IncorrectInputException;
 
 import javax.xml.bind.JAXBException;
 import java.io.*;
@@ -13,16 +13,14 @@ import java.io.*;
 public class Main {
     public static void main(String [] args) throws IOException {
         Dragons dragons = new Dragons();
-        boolean isOpen = false;
         if (args.length == 1 && new File(args[0]).exists()) {
             try {
                 dragons = DragonsXmlConverter.fromXMLFile(".testFiles/test.xml");
                 System.out.println("Файл открыт");
-                isOpen = true;
             } catch (JAXBException e) {
                 System.out.println("у данных в файле некорректный формат");
                 System.exit(0);
-            } catch (IncorrectObjectException e) {
+            } catch (IncorrectInputException e) {
                 System.out.println("данные в файле некорректны");
                 System.out.println(e.getMessage());
                 System.exit(0);
@@ -41,6 +39,7 @@ public class Main {
         commands.addCommand(new HelpCommand(commands));
         commands.addCommand(new ShowCommand(dragons));
         commands.addCommand(new InfoCommand(dragons));
+        commands.addCommand(new AddCommand(dragons));
 
         TextIO console = new Console();
         while (exitCommand.running) {

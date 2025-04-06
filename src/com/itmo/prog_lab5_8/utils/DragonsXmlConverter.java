@@ -2,17 +2,13 @@ package com.itmo.prog_lab5_8.utils;
 
 import com.itmo.prog_lab5_8.models.DragonsWrapper;
 import com.itmo.prog_lab5_8.сollection.Dragons;
-import com.itmo.prog_lab5_8.сollection.IncorrectObjectException;
+import com.itmo.prog_lab5_8.сollection.IncorrectInputException;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class DragonsXmlConverter {
     private static String toXML(DragonsWrapper dragons) {
@@ -45,7 +41,7 @@ public class DragonsXmlConverter {
         }
     }
 
-    public static Dragons fromXMLFile(String path) throws JAXBException, IncorrectObjectException {
+    public static Dragons fromXMLFile(String path) throws JAXBException, IncorrectInputException {
         JAXBContext context = JAXBContext.newInstance(DragonsWrapper.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();
 
