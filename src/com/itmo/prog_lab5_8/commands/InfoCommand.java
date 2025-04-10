@@ -26,6 +26,7 @@ public class InfoCommand implements Command {
 
     @Override
     public void execute(String command, TextIO textIO) {
+        textIO.println("путь до файла: " + dragons.getPath());
         textIO.println("время создания: " + dragons.getCreationTime().toString());
         textIO.println("количество элементов: " + dragons.getLength());
     }

@@ -7,8 +7,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Coordinates {
-    private Float x = 0f; //Поле не может быть null
-    private Float y = 0f; //Поле не может быть null
+    private Float x; //Поле не может быть null
+    private Float y; //Поле не может быть null
 
     public Coordinates() {}
 

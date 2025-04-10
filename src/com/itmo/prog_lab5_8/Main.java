@@ -13,7 +13,11 @@ import java.io.*;
 public class Main {
     public static void main(String [] args) throws IOException {
         Dragons dragons = new Dragons();
-        if (args.length == 1 && new File(args[0]).exists()) {
+        if (args.length != 1) {
+            System.out.println("нужно ввести путь до файла");
+        } else if (!new File(args[0]).exists()) {
+            System.out.println("будет создан новый файл");
+        } else {
             try {
                 dragons = DragonsXmlConverter.fromXMLFile(".testFiles/test.xml");
                 System.out.println("Файл открыт");
@@ -26,12 +30,25 @@ public class Main {
                 System.exit(0);
             }
         }
-        if (args.length == 1 && !new File(args[0]).exists()) {
-            System.out.println("будет создан новый файл");
-        }
-        if (args.length != 1) {
-            System.out.println("нужно ввести путь до файла");
-        }
+//        if (args.length == 1 && new File(args[0]).exists()) {
+//            try {
+//                dragons = DragonsXmlConverter.fromXMLFile(".testFiles/test.xml");
+//                System.out.println("Файл открыт");
+//            } catch (JAXBException e) {
+//                System.out.println("у данных в файле некорректный формат");
+//                System.exit(0);
+//            } catch (IncorrectInputException e) {
+//                System.out.println("данные в файле некорректны");
+//                System.out.println(e.getMessage());
+//                System.exit(0);
+//            }
+//        }
+//        if (args.length == 1 && !new File(args[0]).exists()) {
+//            System.out.println("будет создан новый файл");
+//        }
+//        if (args.length != 1) {
+//            System.out.println("нужно ввести путь до файла");
+//        }
 
         CommandsManager commands = new CommandsManager();
         ExitCommand exitCommand = new ExitCommand();

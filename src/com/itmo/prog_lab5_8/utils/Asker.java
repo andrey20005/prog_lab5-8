@@ -4,12 +4,25 @@ import com.itmo.prog_lab5_8.io.Console;
 import com.itmo.prog_lab5_8.io.TextIO;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Asker {
+    public static boolean yesNo(String prompt, TextIO io) throws IOException {
+        String input = io.input(prompt);
+        input = input.toLowerCase();
+        do {
+            if (input.contains("y") || input.contains("yes") || input.contains("д") || input.contains("да"))
+                return true;
+            else if (input.contains("n") || input.contains("no") || input.contains("н") || input.contains("нет"))
+                return false;
+        } while (io instanceof Console);
+        throw new IOException("неверный ввод");
+    }
+
     public static String ask(String prompt, TextIO io, Predicate<String> checker) throws IOException {
         String input = io.input(prompt);
         if (checker.test(input)) return input;
@@ -38,21 +51,53 @@ public class Asker {
         };
     }
 
+    public static Predicate<String> mayNull(Predicate<String> checker) {
+        return (String text) -> {
+            return text.isEmpty() || checker.test(text);
+        };
+    }
+
+    public static Predicate<String> notNull(Predicate<String> checker) {
+        return (String text) -> {
+            return !text.isEmpty() && checker.test(text);
+        };
+    }
+
     public static boolean isNumber(String text) {
         try {
-            Long.valueOf(text);
+            Long.parseLong(text);
             return true;
         } catch (NumberFormatException e) {
             return false;
         }
     }
 
-    public static boolean isDouble(String text) {
+    public static boolean isNaturalNumber(String text) {
         try {
-            Double.valueOf(text);
+            return Long.parseLong(text) >= 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public static boolean isDecimal(String text) {
+        try {
+            Double.parseDouble(text);
             return true;
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    public static boolean isPositiveDecimal(String text) {
+        try {
+            return Double.parseDouble(text) >= 0.;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public static boolean anything(String text) {
+        return true;
     }
 }
