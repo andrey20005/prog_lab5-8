@@ -18,6 +18,7 @@ public class Main {
             System.exit(0);
         } else if (!new File(args[0]).exists()) {
             System.out.println("будет создан новый файл");
+            dragons.setPath(args[0]);
         } else {
             try {
                 dragons = DragonsXmlConverter.fromXMLFile(".testFiles/test.xml");
@@ -31,25 +32,6 @@ public class Main {
                 System.exit(0);
             }
         }
-//        if (args.length == 1 && new File(args[0]).exists()) {
-//            try {
-//                dragons = DragonsXmlConverter.fromXMLFile(".testFiles/test.xml");
-//                System.out.println("Файл открыт");
-//            } catch (JAXBException e) {
-//                System.out.println("у данных в файле некорректный формат");
-//                System.exit(0);
-//            } catch (IncorrectInputException e) {
-//                System.out.println("данные в файле некорректны");
-//                System.out.println(e.getMessage());
-//                System.exit(0);
-//            }
-//        }
-//        if (args.length == 1 && !new File(args[0]).exists()) {
-//            System.out.println("будет создан новый файл");
-//        }
-//        if (args.length != 1) {
-//            System.out.println("нужно ввести путь до файла");
-//        }
 
         CommandsManager commands = new CommandsManager();
         ExitCommand exitCommand = new ExitCommand();
@@ -60,6 +42,10 @@ public class Main {
         commands.addCommand(new AddCommand(dragons));
         commands.addCommand(new UpdateCommand(dragons));
         commands.addCommand(new RemoveByIdCommand(dragons));
+        commands.addCommand(new ClearCommand(dragons));
+        commands.addCommand(new SaveCommand(dragons));
+        commands.addCommand(new EchoCommand());
+        commands.addCommand(new ExecuteScriptCommand(commands, exitCommand));
 
         TextIO console = new Console();
         while (exitCommand.running) {

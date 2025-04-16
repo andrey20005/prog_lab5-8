@@ -1,31 +1,28 @@
 package com.itmo.prog_lab5_8.io;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.util.Scanner;
 
 public class FileInput implements TextInput{
-    private String fileName;
-    private FileReader reader;
+//    private String fileName;
+//    private FileReader reader;
+    private Scanner scanner;
 
     public FileInput(String fileName) throws FileNotFoundException {
-        this.fileName = fileName;
-        reader = new FileReader(fileName);
+        FileReader reader = new FileReader(fileName);
+        scanner = new Scanner(reader);
     }
 
     @Override
     public boolean ready() {
-        try {
-            return reader.ready();
-        } catch (IOException e) {
-            return false;
-        }
+        return scanner.hasNext();
     }
 
     @Override
     public String input() throws IOException {
-        return new BufferedReader(reader).readLine();
+        String text = scanner.nextLine();
+//        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   " + text);
+        return text;
     }
 
     @Override
