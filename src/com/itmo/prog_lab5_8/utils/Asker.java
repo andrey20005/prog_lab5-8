@@ -34,7 +34,7 @@ public class Asker {
         } else throw new IOException("неверный ввод пользователя");
     }
 
-    private static final Pattern word = Pattern.compile("^ *\\w+ *$");
+    private static final Pattern word = Pattern.compile("(?U)^ *\\w+ *$");
     public static boolean isWord(String text) {
         Matcher matcher = word.matcher(text);
         return matcher.find();
@@ -65,7 +65,7 @@ public class Asker {
 
     public static boolean isNumber(String text) {
         try {
-            Long.parseLong(text);
+            Integer.parseInt(text);
             return true;
         } catch (NumberFormatException e) {
             return false;
@@ -74,7 +74,7 @@ public class Asker {
 
     public static boolean isNaturalNumber(String text) {
         try {
-            return Long.parseLong(text) >= 0;
+            return Integer.parseInt(text) >= 0;
         } catch (NumberFormatException e) {
             return false;
         }
@@ -82,7 +82,7 @@ public class Asker {
 
     public static boolean isDecimal(String text) {
         try {
-            Double.parseDouble(text);
+            Float.parseFloat(text);
             return true;
         } catch (NumberFormatException e) {
             return false;
@@ -91,7 +91,7 @@ public class Asker {
 
     public static boolean isPositiveDecimal(String text) {
         try {
-            return Double.parseDouble(text) >= 0.;
+            return Float.parseFloat(text) >= 0.;
         } catch (NumberFormatException e) {
             return false;
         }

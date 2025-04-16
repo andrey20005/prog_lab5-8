@@ -15,6 +15,7 @@ public class Main {
         Dragons dragons = new Dragons();
         if (args.length != 1) {
             System.out.println("нужно ввести путь до файла");
+            System.exit(0);
         } else if (!new File(args[0]).exists()) {
             System.out.println("будет создан новый файл");
         } else {
@@ -57,6 +58,8 @@ public class Main {
         commands.addCommand(new ShowCommand(dragons));
         commands.addCommand(new InfoCommand(dragons));
         commands.addCommand(new AddCommand(dragons));
+        commands.addCommand(new UpdateCommand(dragons));
+        commands.addCommand(new RemoveByIdCommand(dragons));
 
         TextIO console = new Console();
         while (exitCommand.running) {

@@ -89,6 +89,54 @@ public class Dragons {
         return id;
     }
 
+    public boolean hasDragonId(long id) {
+        for (Dragon dragon : dragons) {
+            if (dragon.getId() == id) return true;
+        }
+        return false;
+    }
+
+    public void update(long id, Dragon newDragon) throws IncorrectInputException {
+        if (hasDragonId(id)) {
+            for (Dragon dragon : dragons) {
+                if (dragon.getId() == id) {
+                    if (Objects.equals(newDragon.getName(), null) || newDragon.getName() == "") throw new IncorrectInputException("имя задано некорректно");
+                    if (Objects.equals(newDragon.getCoordinates().getX(), null)) throw new IncorrectInputException("координата X задана некорректно");
+                    if (Objects.equals(newDragon.getCoordinates().getY(), null)) throw new IncorrectInputException("координата Y задана некорректно");
+                    if (newDragon.getAge() <= 0) throw new IncorrectInputException("возраст задан некорректно");
+                    if (Objects.equals(newDragon.getWeight(), null) || newDragon.getWeight() <= 0) throw new IncorrectInputException("вес задан некорректно");
+                    if (Objects.equals(newDragon.getCharacter(), null)) throw new IncorrectInputException("характер задан некорректно");
+                    if (!Objects.equals(newDragon.getKiller(), null)) {
+                        if (Objects.equals(newDragon.getKiller().getName(), null)) throw new IncorrectInputException("имя убийцы задано некорректно");
+                        if (newDragon.getKiller().getHeight() <= 0) throw new IncorrectInputException("рост убийцы задан некорректно");
+                        if (Objects.equals(newDragon.getKiller().getEyeColor(), null)) throw new IncorrectInputException("цвет глаз убийцы задано некорректно");
+                        if (Objects.equals(newDragon.getKiller().getHairColor(), null)) throw new IncorrectInputException("цвет волос убийцы задан некорректно");
+                        if (Objects.equals(newDragon.getKiller().getLocation(), null)) throw new IncorrectInputException("локация убийцы задана некорректно");
+                        if (Objects.equals(newDragon.getKiller().getLocation().getY(), null)) throw new IncorrectInputException("Y локации убийцы задано некорректно");
+                        if (Objects.equals(newDragon.getKiller().getLocation().getName(), null)) throw new IncorrectInputException("названия локации убийцы задано некорректно");
+                    }
+                    newDragon.setId(dragon.getId());
+                    newDragon.setCreationDate(dragon.getCreationDate());
+                    dragons.remove(dragon);
+                    dragons.add(newDragon);
+                }
+            }
+        } else {
+            throw new IncorrectInputException("дракон с указанным id не найден");
+        }
+    }
+
+    public void removeById(long id)  throws IncorrectInputException {
+        if (!hasDragonId(id)) throw new IncorrectInputException("дракон с указанным id не найден");
+        for (Dragon dragon : dragons) {
+            if (dragon.getId() == id) dragons.remove(dragon);
+        }
+    }
+
+    public void clear() {
+        dragons.clear();
+    }
+
     public void addIfMin(Dragon newDragon) throws IncorrectInputException {
         boolean flag = true;
         for (Dragon dragon : dragons) {

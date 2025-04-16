@@ -18,7 +18,7 @@ public class CommandsManager {
         return commands;
     }
 
-    private final Pattern commandNamePattern = Pattern.compile("^(\\w+)( +|$)");
+    private final Pattern commandNamePattern = Pattern.compile("(?U)^(\\w+)( +|$)");
     public void execute(String command, TextIO textIO) throws IncorrectCommandException {
         Matcher commandNameMatcher = commandNamePattern.matcher(command);
         if (commandNameMatcher.find()) {
