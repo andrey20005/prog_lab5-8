@@ -1,12 +1,10 @@
-package com.itmo.prog_lab5_8.commands;
+package com.itmo.prog_lab5_8.cli.commands;
 
-import com.itmo.prog_lab5_8.io.FileInput;
-import com.itmo.prog_lab5_8.io.TextIO;
-import com.itmo.prog_lab5_8.io.TextIOManager;
-import com.itmo.prog_lab5_8.io.TextInput;
-import com.itmo.prog_lab5_8.utils.Asker;
+import com.itmo.prog_lab5_8.cli.io.FileInput;
+import com.itmo.prog_lab5_8.cli.io.TextIO;
+import com.itmo.prog_lab5_8.cli.io.TextIOManager;
+import com.itmo.prog_lab5_8.cli.io.TextInput;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.regex.Matcher;

@@ -14,7 +14,7 @@ public class Dragon implements Comparable<Dragon> {
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
     @XmlJavaTypeAdapter(ZonedDateTimeAdapter.class)
-    private java.time.ZonedDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
+    private ZonedDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
     private int age; //Значение поля должно быть больше 0
     private String description; //Поле может быть null
     private Float weight; //Значение поля должно быть больше 0, Поле не может быть null
@@ -23,6 +23,58 @@ public class Dragon implements Comparable<Dragon> {
 
     // нужно для jaxb
     public Dragon() {}
+
+    public Dragon(Long id,
+                  String name,
+                  float coordinatesX,
+                  float coordinatesY,
+                  ZonedDateTime creationDate,
+                  int age,
+                  String description,
+                  float weight,
+                  DragonCharacter character) {
+        this.id = id;
+        this.name = name;
+        this.coordinates = new Coordinates(coordinatesX, coordinatesY);
+        this.creationDate = creationDate;
+        this.age = age;
+        this.description = description;
+        this.weight = weight;
+        this.character = character;
+    }
+
+    public Dragon(Long id,
+                  String name,
+                  float coordinatesX,
+                  float coordinatesY,
+                  ZonedDateTime creationDate,
+                  int age,
+                  String description,
+                  float weight,
+                  DragonCharacter character,
+                  String killerName,
+                  double killerHeight,
+                  Color killerEyeColor,
+                  Color killerHeirColor,
+                  int killerLocationX,
+                  int killerLocationY,
+                  String killerLocationName) {
+        this.id = id;
+        this.name = name;
+        this.coordinates = new Coordinates(coordinatesX, coordinatesY);
+        this.creationDate = creationDate;
+        this.age = age;
+        this.description = description;
+        this.weight = weight;
+        this.character = character;
+        this.killer = new Person(
+                killerName,
+                killerHeight,
+                killerEyeColor,
+                killerEyeColor,
+                new Location(killerLocationX, killerLocationY, killerLocationName)
+                );
+    }
 
     @Override
     public String toString() {

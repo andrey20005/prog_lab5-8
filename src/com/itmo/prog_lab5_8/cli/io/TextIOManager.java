@@ -1,6 +1,4 @@
-package com.itmo.prog_lab5_8.io;
-
-import java.io.IOException;
+package com.itmo.prog_lab5_8.cli.io;
 
 public class TextIOManager implements TextIO {
     private final TextInput textInput;
@@ -22,12 +20,12 @@ public class TextIOManager implements TextIO {
     }
 
     @Override
-    public String input() throws IOException {
+    public String input() {
         return textInput.input();
     }
 
     @Override
-    public String input(String prompt) throws IOException {
+    public String input(String prompt) {
         return textInput.input(prompt);
     }
 }

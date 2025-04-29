@@ -1,11 +1,9 @@
-package com.itmo.prog_lab5_8.io;
+package com.itmo.prog_lab5_8.cli.io;
 
 import java.io.*;
 import java.util.Scanner;
 
 public class FileInput implements TextInput{
-//    private String fileName;
-//    private FileReader reader;
     private Scanner scanner;
 
     public FileInput(String fileName) throws FileNotFoundException {
@@ -19,14 +17,13 @@ public class FileInput implements TextInput{
     }
 
     @Override
-    public String input() throws IOException {
+    public String input() {
         String text = scanner.nextLine();
-//        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   " + text);
         return text;
     }
 
     @Override
-    public String input(String prompt) throws IOException {
+    public String input(String prompt) {
         return input();
     }
 }

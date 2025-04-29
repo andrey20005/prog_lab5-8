@@ -1,4 +1,4 @@
-package com.itmo.prog_lab5_8.utils;
+package com.itmo.prog_lab5_8.cli.utils;
 
 import com.itmo.prog_lab5_8.models.*;
 import com.itmo.prog_lab5_8.models.Dragon;

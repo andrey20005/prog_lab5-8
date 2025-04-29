@@ -1,9 +1,9 @@
 package com.itmo.prog_lab5_8;
 
-import com.itmo.prog_lab5_8.commands.*;
-import com.itmo.prog_lab5_8.io.Console;
-import com.itmo.prog_lab5_8.io.TextIO;
-import com.itmo.prog_lab5_8.utils.DragonsXmlConverter;
+import com.itmo.prog_lab5_8.cli.commands.*;
+import com.itmo.prog_lab5_8.cli.io.Console;
+import com.itmo.prog_lab5_8.cli.io.TextIO;
+import com.itmo.prog_lab5_8.cli.utils.DragonsXmlConverter;
 import com.itmo.prog_lab5_8.сollection.Dragons;
 import com.itmo.prog_lab5_8.сollection.IncorrectInputException;
 
@@ -21,7 +21,7 @@ public class Main {
             dragons.setPath(args[0]);
         } else {
             try {
-                dragons = DragonsXmlConverter.fromXMLFile(".testFiles/test.xml");
+                dragons = DragonsXmlConverter.fromXMLFile(args[0]);
                 System.out.println("Файл открыт");
             } catch (JAXBException e) {
                 System.out.println("у данных в файле некорректный формат");
@@ -46,6 +46,7 @@ public class Main {
         commands.addCommand(new SaveCommand(dragons));
         commands.addCommand(new EchoCommand());
         commands.addCommand(new ExecuteScriptCommand(commands, exitCommand));
+        commands.addCommand(new TestInputCommand());
 
         TextIO console = new Console();
         while (exitCommand.running) {

@@ -1,6 +1,8 @@
 package com.itmo.prog_lab5_8.сollection;
 
+import com.itmo.prog_lab5_8.models.Color;
 import com.itmo.prog_lab5_8.models.Dragon;
+import com.itmo.prog_lab5_8.models.DragonCharacter;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayDeque;
@@ -74,6 +76,72 @@ public class Dragons {
         newDragon.setCharacter(dragon.getCharacter());
         newDragon.setKiller(dragon.getKiller());
         dragons.add(newDragon);
+    }
+
+    public void add(
+            String name,
+            float coordinateX,
+            float coordinateY,
+            int age,
+            String description,
+            float weight,
+            DragonCharacter character
+    ) {
+        if (Objects.equals(name, null) || name == "") throw new IllegalArgumentException("нельзя передовать пустое имя");
+        if (Objects.equals(character, null)) throw new IllegalArgumentException("характер не может быть null");
+        Dragon dragon = new Dragon(
+                getUniqueID(),
+                name,
+                coordinateX,
+                coordinateY,
+                ZonedDateTime.now(),
+                age,
+                description,
+                weight,
+                character
+        );
+        dragons.add(dragon);
+    }
+
+    public void add(String name,
+                    float coordinateX,
+                    float coordinateY,
+                    int age,
+                    String description,
+                    float weight,
+                    DragonCharacter character,
+                    String killerName,
+                    double killerHeight,
+                    Color killerEyeColor,
+                    Color killerHeirColor,
+                    int killerLocationX,
+                    int killerLocationY,
+                    String killerLocationName) {
+        if (Objects.equals(name, null) || name == "") throw new IllegalArgumentException("нельзя передавать пустое имя");
+        if (Objects.equals(character, null)) throw new IllegalArgumentException("характер не может быть null");
+        if (Objects.equals(killerName, null) || killerName == "") throw new IllegalArgumentException("нельзя передавать пустое имя убийцы");
+        if (Objects.equals(killerEyeColor, null)) throw new IllegalArgumentException("цвет глаз не может быть null");
+        if (Objects.equals(killerHeirColor, null)) throw new IllegalArgumentException("цвет волос не может быть null");
+        if (Objects.equals(killerLocationName, null) || killerLocationName == "") throw new IllegalArgumentException("нельзя передавать пустое имя локации");
+        Dragon dragon = new Dragon(
+                getUniqueID(),
+                name,
+                coordinateX,
+                coordinateY,
+                ZonedDateTime.now(),
+                age,
+                description,
+                weight,
+                character,
+                killerName,
+                killerHeight,
+                killerEyeColor,
+                killerHeirColor,
+                killerLocationX,
+                killerLocationY,
+                killerLocationName
+        );
+        dragons.add(dragon);
     }
 
     private long getUniqueID() {
