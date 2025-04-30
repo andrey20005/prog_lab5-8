@@ -4,7 +4,9 @@ import java.io.*;
 import java.util.Scanner;
 
 public class FileInput implements TextInput{
-    private Scanner scanner;
+    private final Scanner scanner;
+    private int counter = 0;
+    private String lastInput;
 
     public FileInput(String fileName) throws FileNotFoundException {
         FileReader reader = new FileReader(fileName);
@@ -18,7 +20,9 @@ public class FileInput implements TextInput{
 
     @Override
     public String input() {
+        counter++;
         String text = scanner.nextLine();
+        lastInput = text;
         return text;
     }
 
@@ -26,4 +30,6 @@ public class FileInput implements TextInput{
     public String input(String prompt) {
         return input();
     }
+
+    public String getLastInput() {return counter + " " +  lastInput;}
 }

@@ -6,5 +6,4 @@ public interface Command {
     public void execute(String command, TextIO textIO);
     public String getName();
     public String getDescription();
-    public String getSyntax();
 }

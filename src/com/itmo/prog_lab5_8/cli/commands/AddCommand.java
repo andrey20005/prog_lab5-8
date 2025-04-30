@@ -25,11 +25,6 @@ public class AddCommand implements Command {
     }
 
     @Override
-    public String getSyntax() {
-        return "add {name, coordinates.x, coordinates.y, age, description, weight, character, killer yes|no Null|{name, height, eyeColor, hairColor, location.x, location.y, location.name}}";
-    }
-
-    @Override
     public void execute(String command, TextIO textIO) {
         try {
             Asker asker = new Asker(textIO);
@@ -54,7 +49,7 @@ public class AddCommand implements Command {
                         );
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
     }
 }

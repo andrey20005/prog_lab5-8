@@ -4,7 +4,7 @@ import com.itmo.prog_lab5_8.cli.CommandsManager;
 import com.itmo.prog_lab5_8.cli.io.TextIO;
 
 public class HelpCommand implements Command{
-    private CommandsManager commandsManager;
+    private final CommandsManager commandsManager;
 
     public HelpCommand(CommandsManager commandsManager) {
         this.commandsManager = commandsManager;
@@ -21,14 +21,7 @@ public class HelpCommand implements Command{
     }
 
     @Override
-    public String getSyntax() {
-        return "help";
-    }
-
-    @Override
     public void execute(String command, TextIO textIO) {
-        commandsManager.getCommands().forEach(
-                (key, com) -> textIO.println(com.getDescription())
-        );
+        textIO.println(commandsManager.getHelp());
     }
 }

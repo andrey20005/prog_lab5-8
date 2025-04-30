@@ -28,11 +28,6 @@ public class UpdateCommand implements Command{
         return "update id {element}: обновить значение элемента коллекции, id которого равен заданному";
     }
 
-    @Override
-    public String getSyntax() {
-        return "update id {name, coordinates.x, coordinates.y, age, description, weight, character, killer yes|no Null|{name, height, eyeColor, hairColor, location.x, location.y, location.name}}";
-    }
-
     private final Pattern commandNamePattern = Pattern.compile("(?U)^(\\w+) +(\\w+) *$");
     @Override
     public void execute(String command, TextIO textIO) {

@@ -5,9 +5,9 @@ echo \
 show
 add
 Гоша
+-9
 0
-0
-145
+-145
 это дракон по имени Гоша
 1556
 CUTTING
@@ -15,4 +15,5 @@ no
 echo \
 echo \ после
 echo \
+execute_script .testFiles/scr
 show

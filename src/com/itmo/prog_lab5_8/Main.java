@@ -5,6 +5,7 @@ import com.itmo.prog_lab5_8.cli.commands.*;
 import com.itmo.prog_lab5_8.cli.io.Console;
 import com.itmo.prog_lab5_8.cli.io.TextIO;
 import com.itmo.prog_lab5_8.cli.utils.DragonsXmlConverter;
+import com.itmo.prog_lab5_8.cli.utils.ScriptExecutor;
 import com.itmo.prog_lab5_8.сollection.Dragons;
 import com.itmo.prog_lab5_8.сollection.IncorrectInputException;
 
@@ -35,8 +36,7 @@ public class Main {
         }
 
         CommandsManager commands = new CommandsManager();
-        ExitCommand exitCommand = new ExitCommand();
-        commands.addCommand(exitCommand);
+        commands.addCommand(new ExitCommand(commands));
         commands.addCommand(new HelpCommand(commands));
         commands.addCommand(new ShowCommand(dragons));
         commands.addCommand(new InfoCommand(dragons));
@@ -46,11 +46,10 @@ public class Main {
         commands.addCommand(new ClearCommand(dragons));
         commands.addCommand(new SaveCommand(dragons));
         commands.addCommand(new EchoCommand());
-        commands.addCommand(new ExecuteScriptCommand(commands, exitCommand));
-        commands.addCommand(new TestInputCommand());
+        commands.addCommand(new ExecuteScriptCommand(new ScriptExecutor(commands)));
 
         TextIO console = new Console();
-        while (exitCommand.running) {
+        while (commands.isRunning()) {
             try {
                 commands.execute(console.input("> "), console);
             } catch (RuntimeException exception) {

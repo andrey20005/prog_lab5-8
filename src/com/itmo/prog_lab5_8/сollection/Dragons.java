@@ -1,5 +1,6 @@
 package com.itmo.prog_lab5_8.сollection;
 
+import com.itmo.prog_lab5_8.cli.utils.DragonsXmlConverter;
 import com.itmo.prog_lab5_8.models.Color;
 import com.itmo.prog_lab5_8.models.Dragon;
 import com.itmo.prog_lab5_8.models.DragonCharacter;
@@ -225,5 +226,24 @@ public class Dragons {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public String getInfo() {
+        return "путь до файла: " + getPath() + "\n" +
+                "время создания: " + getCreationTime().toString() + "\n" +
+                "количество элементов: " + getLength();
+    }
+
+    public void save() {
+        DragonsXmlConverter.toXMLFile(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Dragons{" + "\n" +
+                "creationTime=" + creationTime + ",\n" +
+                "path='" + path + '\'' + ",\n"  +
+                "dragons=" + dragons + "\n"  +
+                '}';
     }
 }

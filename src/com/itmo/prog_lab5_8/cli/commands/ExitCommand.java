@@ -1,9 +1,14 @@
 package com.itmo.prog_lab5_8.cli.commands;
 
+import com.itmo.prog_lab5_8.cli.CommandsManager;
 import com.itmo.prog_lab5_8.cli.io.TextIO;
 
 public class ExitCommand implements Command{
-    public boolean running = true;
+    private final CommandsManager commands;
+    public ExitCommand(CommandsManager commands) {
+        this.commands = commands;
+    }
+
     @Override
     public String getName() {
         return "exit";
@@ -15,13 +20,7 @@ public class ExitCommand implements Command{
     }
 
     @Override
-    public String getSyntax() {
-        return "exit";
-    }
-
-    @Override
     public void execute(String command, TextIO textIO) {
-        running = false;
-//        System.exit(0);
+        commands.setRunning(false);
     }
 }

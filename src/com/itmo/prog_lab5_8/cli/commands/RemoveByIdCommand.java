@@ -28,11 +28,6 @@ public class RemoveByIdCommand implements Command {
     }
 
     @Override
-    public String getSyntax() {
-        return "remove_by_id id";
-    }
-
-    @Override
     public void execute(String command, TextIO textIO) {
         long id;
         try {

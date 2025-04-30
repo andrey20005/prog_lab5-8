@@ -21,12 +21,7 @@ public class SaveCommand implements Command {
     }
 
     @Override
-    public String getSyntax() {
-        return "save";
-    }
-
-    @Override
     public void execute(String command, TextIO textIO) {
-        DragonsXmlConverter.toXMLFile(dragons);
+        dragons.save();
     }
 }

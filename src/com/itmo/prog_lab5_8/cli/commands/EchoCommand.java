@@ -4,14 +4,6 @@ import com.itmo.prog_lab5_8.cli.io.TextIO;
 
 public class EchoCommand implements Command {
     @Override
-    public void execute(String command, TextIO textIO) {
-        if (command.length() > getName().length() + 1) {
-            textIO.println(command.substring(getName().length() + 1));
-//            System.out.println(command.substring(getName().length() + 1));
-        }
-    }
-
-    @Override
     public String getName() {
         return "echo";
     }
@@ -22,7 +14,9 @@ public class EchoCommand implements Command {
     }
 
     @Override
-    public String getSyntax() {
-        return "echo [text]";
+    public void execute(String command, TextIO textIO) {
+        if (command.length() > getName().length() + 1) {
+            textIO.println(command.substring(getName().length() + 1));
+        }
     }
 }

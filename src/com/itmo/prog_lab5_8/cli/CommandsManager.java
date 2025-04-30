@@ -1,7 +1,6 @@
 package com.itmo.prog_lab5_8.cli;
 
 import com.itmo.prog_lab5_8.cli.commands.Command;
-import com.itmo.prog_lab5_8.cli.commands.IncorrectCommandException;
 import com.itmo.prog_lab5_8.cli.io.TextIO;
 
 import java.util.HashMap;
@@ -11,6 +10,7 @@ import java.util.regex.Pattern;
 
 public class CommandsManager {
     private final Map<String, Command> commands = new HashMap<String, Command>();
+    private boolean running = true;
 
     public void addCommand(Command command) {
         commands.put(command.getName(), command);
@@ -33,5 +33,15 @@ public class CommandsManager {
         } else {
             throw new IllegalArgumentException("Команд должна выглядеть так:  имя_команды [аргументы_команды]");
         }
+    }
+
+    public boolean isRunning() {return running;}
+
+    public void setRunning(boolean running) {this.running = running;}
+
+    public String getHelp() {
+        StringBuilder builder = new StringBuilder();
+        commands.forEach((key, com) -> builder.append(com.getDescription()).append("\n"));
+        return builder.toString();
     }
 }

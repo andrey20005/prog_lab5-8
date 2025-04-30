@@ -1,4 +1,4 @@
-package com.itmo.prog_lab5_8.cli.commands;
+package com.itmo.prog_lab5_8.cli;
 
 public class IncorrectCommandException extends RuntimeException {
     public IncorrectCommandException(String command, String problemDescription) {

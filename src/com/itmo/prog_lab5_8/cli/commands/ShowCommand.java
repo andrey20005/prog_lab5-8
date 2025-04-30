@@ -20,14 +20,7 @@ public class ShowCommand implements Command {
     }
 
     @Override
-    public String getSyntax() {
-        return "show";
-    }
-
-    @Override
     public void execute(String command, TextIO textIO) {
-        dragons.getDragons().forEach(
-                dragon -> textIO.println(dragon.toString())
-        );
+        textIO.println(dragons.toString());
     }
 }

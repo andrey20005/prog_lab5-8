@@ -20,11 +20,6 @@ public class ClearCommand implements Command {
     }
 
     @Override
-    public String getSyntax() {
-        return "clear";
-    }
-
-    @Override
     public void execute(String command, TextIO textIO) {
         dragons.clear();
     }
