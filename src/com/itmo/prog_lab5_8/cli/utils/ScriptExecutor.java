@@ -34,6 +34,7 @@ public class ScriptExecutor {
                 commandsManager.execute(newTextIO.input(), newTextIO);
             }
         } catch (RuntimeException e) {
+            stack.pop();
             throw new RuntimeException("во время исполнения скрипта произошла ошибка" + "\n" +
                     input.getLastInput() + "\n" + e.getMessage());
         }
