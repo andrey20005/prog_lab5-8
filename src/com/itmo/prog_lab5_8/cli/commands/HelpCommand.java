@@ -1,5 +1,6 @@
 package com.itmo.prog_lab5_8.cli.commands;
 
+import com.itmo.prog_lab5_8.cli.CommandsManager;
 import com.itmo.prog_lab5_8.cli.io.TextIO;
 
 public class HelpCommand implements Command{

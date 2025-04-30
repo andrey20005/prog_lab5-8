@@ -5,6 +5,9 @@ import com.itmo.prog_lab5_8.cli.utils.Asker;
 import com.itmo.prog_lab5_8.сollection.Dragons;
 import com.itmo.prog_lab5_8.сollection.IncorrectInputException;
 
+import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,19 +32,19 @@ public class RemoveByIdCommand implements Command {
         return "remove_by_id id";
     }
 
-    private final Pattern commandNamePattern = Pattern.compile("(?U)^(\\w+) +(\\w+) *$");
     @Override
     public void execute(String command, TextIO textIO) {
-        Matcher commandMatcher = commandNamePattern.matcher(command);
-        if(!commandMatcher.find()) textIO.println("команда должна содержать только id дракона");
-        else if (!Asker.isPositiveDecimal(commandMatcher.group(2))) textIO.println("id дракона должен быть числом");
-        else {
-            long id = Long.parseLong(commandMatcher.group(2));
-            try {
-                dragons.removeById(id);
-            } catch (IncorrectInputException e) {
-                textIO.println("такого id нет");
-            }
+        long id;
+        try {
+            Scanner scanner = new Scanner(command.substring(getName().length() + 1));
+            id = scanner.nextLong();
+            if (id<=0) throw new IllegalArgumentException("индекс должен быть положительным");
+        } catch (InputMismatchException e) {
+            throw new IllegalArgumentException("первым аргументом должно быть число");
+        } catch (NoSuchElementException | IllegalStateException | IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException("нужно передать аргумент");
         }
+
+        dragons.removeById(id);
     }
 }

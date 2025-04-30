@@ -78,15 +78,13 @@ public class Dragons {
         dragons.add(newDragon);
     }
 
-    public void add(
-            String name,
-            float coordinateX,
-            float coordinateY,
-            int age,
-            String description,
-            float weight,
-            DragonCharacter character
-    ) {
+    public void add(String name,
+                    float coordinateX,
+                    float coordinateY,
+                    int age,
+                    String description,
+                    float weight,
+                    DragonCharacter character) {
         if (Objects.equals(name, null) || name == "") throw new IllegalArgumentException("нельзя передовать пустое имя");
         if (Objects.equals(character, null)) throw new IllegalArgumentException("характер не может быть null");
         Dragon dragon = new Dragon(
@@ -164,41 +162,41 @@ public class Dragons {
         return false;
     }
 
-    public void update(long id, Dragon newDragon) throws IncorrectInputException {
-        if (hasDragonId(id)) {
-            for (Dragon dragon : dragons) {
-                if (dragon.getId() == id) {
-                    if (Objects.equals(newDragon.getName(), null) || newDragon.getName() == "") throw new IncorrectInputException("имя задано некорректно");
-                    if (Objects.equals(newDragon.getCoordinates().getX(), null)) throw new IncorrectInputException("координата X задана некорректно");
-                    if (Objects.equals(newDragon.getCoordinates().getY(), null)) throw new IncorrectInputException("координата Y задана некорректно");
-                    if (newDragon.getAge() <= 0) throw new IncorrectInputException("возраст задан некорректно");
-                    if (Objects.equals(newDragon.getWeight(), null) || newDragon.getWeight() <= 0) throw new IncorrectInputException("вес задан некорректно");
-                    if (Objects.equals(newDragon.getCharacter(), null)) throw new IncorrectInputException("характер задан некорректно");
-                    if (!Objects.equals(newDragon.getKiller(), null)) {
-                        if (Objects.equals(newDragon.getKiller().getName(), null)) throw new IncorrectInputException("имя убийцы задано некорректно");
-                        if (newDragon.getKiller().getHeight() <= 0) throw new IncorrectInputException("рост убийцы задан некорректно");
-                        if (Objects.equals(newDragon.getKiller().getEyeColor(), null)) throw new IncorrectInputException("цвет глаз убийцы задано некорректно");
-                        if (Objects.equals(newDragon.getKiller().getHairColor(), null)) throw new IncorrectInputException("цвет волос убийцы задан некорректно");
-                        if (Objects.equals(newDragon.getKiller().getLocation(), null)) throw new IncorrectInputException("локация убийцы задана некорректно");
-                        if (Objects.equals(newDragon.getKiller().getLocation().getY(), null)) throw new IncorrectInputException("Y локации убийцы задано некорректно");
-                        if (Objects.equals(newDragon.getKiller().getLocation().getName(), null)) throw new IncorrectInputException("названия локации убийцы задано некорректно");
-                    }
-                    newDragon.setId(dragon.getId());
-                    newDragon.setCreationDate(dragon.getCreationDate());
-                    dragons.remove(dragon);
-                    dragons.add(newDragon);
-                }
-            }
-        } else {
-            throw new IncorrectInputException("дракон с указанным id не найден");
-        }
+    public void update(long id,
+                       String name,
+                       float coordinateX,
+                       float coordinateY,
+                       int age,
+                       String description,
+                       float weight,
+                       DragonCharacter character) {
+        removeById(id);
+        add(name, coordinateX, coordinateY, age, description, weight, character);
     }
 
-    public void removeById(long id)  throws IncorrectInputException {
-        if (!hasDragonId(id)) throw new IncorrectInputException("дракон с указанным id не найден");
-        for (Dragon dragon : dragons) {
-            if (dragon.getId() == id) dragons.remove(dragon);
-        }
+    public void update(long id,
+                       String name,
+                       float coordinateX,
+                       float coordinateY,
+                       int age,
+                       String description,
+                       float weight,
+                       DragonCharacter character,
+                       String killerName,
+                       double killerHeight,
+                       Color killerEyeColor,
+                       Color killerHeirColor,
+                       int killerLocationX,
+                       int killerLocationY,
+                       String killerLocationName) {
+        removeById(id);
+        add(name, coordinateX, coordinateY, age, description, weight, character,
+                killerName, killerHeight, killerEyeColor, killerHeirColor, killerLocationX, killerLocationY, killerLocationName);
+    }
+
+    public void removeById(long id) {
+        if (!hasDragonId(id)) throw new IllegalArgumentException("дракон с указанным id не найден");
+        dragons.removeIf(dragon -> dragon.getId() == id);
     }
 
     public void clear() {

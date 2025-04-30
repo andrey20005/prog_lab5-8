@@ -1,5 +1,6 @@
 package com.itmo.prog_lab5_8;
 
+import com.itmo.prog_lab5_8.cli.CommandsManager;
 import com.itmo.prog_lab5_8.cli.commands.*;
 import com.itmo.prog_lab5_8.cli.io.Console;
 import com.itmo.prog_lab5_8.cli.io.TextIO;
@@ -52,7 +53,7 @@ public class Main {
         while (exitCommand.running) {
             try {
                 commands.execute(console.input("> "), console);
-            } catch (IncorrectCommandException exception) {
+            } catch (RuntimeException exception) {
                 System.out.println(exception.getMessage());
             }
         }

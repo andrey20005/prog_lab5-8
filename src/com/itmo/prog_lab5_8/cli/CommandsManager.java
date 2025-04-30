@@ -1,5 +1,7 @@
-package com.itmo.prog_lab5_8.cli.commands;
+package com.itmo.prog_lab5_8.cli;
 
+import com.itmo.prog_lab5_8.cli.commands.Command;
+import com.itmo.prog_lab5_8.cli.commands.IncorrectCommandException;
 import com.itmo.prog_lab5_8.cli.io.TextIO;
 
 import java.util.HashMap;
@@ -19,17 +21,17 @@ public class CommandsManager {
     }
 
     private final Pattern commandNamePattern = Pattern.compile("(?U)^(\\w+)( +|$)");
-    public void execute(String command, TextIO textIO) throws IncorrectCommandException {
+    public void execute(String command, TextIO textIO) {
         Matcher commandNameMatcher = commandNamePattern.matcher(command);
         if (commandNameMatcher.find()) {
             String commandName = commandNameMatcher.group(1);
             if (commands.containsKey(commandName)) {
                 commands.get(commandName).execute(command, textIO);
             } else {
-                throw new IncorrectCommandException(command, "Комманда " + commandName + " не найдена.");
+                throw new IllegalArgumentException("Команда " + commandName + " не найдена.");
             }
         } else {
-            throw new IncorrectCommandException(command, "Комманд должна выглядеть так:  имя_комманды [аргументы_комманды]");
+            throw new IllegalArgumentException("Команд должна выглядеть так:  имя_команды [аргументы_команды]");
         }
     }
 }

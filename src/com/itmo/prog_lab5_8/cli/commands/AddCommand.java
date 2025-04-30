@@ -43,14 +43,7 @@ public class AddCommand implements Command {
             boolean haveKiller = asker.yesNo("есть ли убийца[yes|no]: ");
             if (!haveKiller) dragons.add(name, coordinateX, coordinateY, age, description, weight, character);
             else {
-                dragons.add(
-                        name,
-                        coordinateX,
-                        coordinateY,
-                        age,
-                        description,
-                        weight,
-                        character,
+                dragons.add(name, coordinateX, coordinateY, age, description, weight, character,
                         asker.getWord("имя убийцы: "),
                         asker.getPositiveDouble("рост убийцы: "),
                         asker.ask(Arrays.toString(Color.values()) + "\n" + "цвет глаз: ", Color::valueOf),
@@ -63,41 +56,5 @@ public class AddCommand implements Command {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-//        try {
-//            Dragon newDragon = new Dragon();
-//            newDragon.setName(Asker.ask("name: ", textIO, Asker::isWord));
-//            newDragon.setCoordinates(new Coordinates(
-//                    Float.parseFloat(Asker.ask("coordinate.x: ", textIO, Asker::isDecimal)),
-//                    Float.parseFloat(Asker.ask("coordinate.y: ", textIO, Asker::isDecimal))
-//            ));
-//            newDragon.setAge(Integer.parseInt(Asker.ask("age: ", textIO, Asker::isNaturalNumber)));
-//            newDragon.setDescription(Asker.ask("description: ", textIO, Asker::anything));
-//            newDragon.setWeight(Float.parseFloat(Asker.ask("weight: ", textIO, Asker::isPositiveDecimal)));
-//            newDragon.setCharacter(DragonCharacter.valueOf(Asker.ask(Arrays.toString(
-//                    DragonCharacter.values()) + "\n" + "character: ",
-//                    textIO,
-//                    Asker.isConverted(DragonCharacter::valueOf
-//                    ))));
-//            if (Asker.yesNo("есть ли убийца: ", textIO)) {
-//                Person killer = new Person();
-//                killer.setName(Asker.ask("killer.name: ", textIO, Asker::isWord));
-//                killer.setHeight(Double.parseDouble(Asker.ask("killer.height: ", textIO, Asker::isPositiveDecimal)));
-//                killer.setEyeColor(Color.valueOf(Asker.ask(Arrays.toString(Color.values()) + "\nkiller.eyeColor: ", textIO, Asker.isConverted(Color::valueOf))));
-//                killer.setHairColor(Color.valueOf(Asker.ask(Arrays.toString(Color.values()) + "\nkiller.hairColor: ", textIO, Asker.isConverted(Color::valueOf))));
-//                killer.setLocation(new Location(
-//                        Integer.parseInt(Asker.ask("killer.location.x: ", textIO, Asker::isNumber)),
-//                        Integer.parseInt(Asker.ask("killer.location.y: ", textIO, Asker::isNumber)),
-//                        Asker.ask("killer.location.name: ", textIO, Asker::isWord)
-//                ));
-//                newDragon.setKiller(killer);
-//            }
-//            newDragon.setCreationDate(ZonedDateTime.now());
-//            dragons.add(newDragon);
-//
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        } catch (IncorrectInputException e) {
-//            textIO.println("Полученный дракон некорректен" + "\n" + e.getMessage());
-//        }
     }
 }

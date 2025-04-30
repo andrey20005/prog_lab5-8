@@ -1,5 +1,6 @@
 package com.itmo.prog_lab5_8.cli.commands;
 
+import com.itmo.prog_lab5_8.cli.CommandsManager;
 import com.itmo.prog_lab5_8.cli.io.FileInput;
 import com.itmo.prog_lab5_8.cli.io.TextIO;
 import com.itmo.prog_lab5_8.cli.io.TextIOManager;
@@ -48,8 +49,7 @@ public class ExecuteScriptCommand implements Command {
                 exitCommand.running = true;
             } catch (FileNotFoundException e) {
                 textIO.println("путь до файла некорректен");
-            } catch (IOException e) {
-                textIO.println("файл закончился");
+            } catch (RuntimeException e) {
                 exitCommand.running = true;
             }
         }
