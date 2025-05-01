@@ -6,14 +6,14 @@ import com.itmo.prog_lab5_8.cli.io.Console;
 import com.itmo.prog_lab5_8.cli.io.TextIO;
 import com.itmo.prog_lab5_8.cli.utils.DragonsXmlConverter;
 import com.itmo.prog_lab5_8.cli.utils.ScriptExecutor;
-import com.itmo.prog_lab5_8.сollection.Dragons;
-import com.itmo.prog_lab5_8.сollection.IncorrectInputException;
+import com.itmo.prog_lab5_8.collection.Dragons;
+import com.itmo.prog_lab5_8.collection.IncorrectInputException;
 
 import javax.xml.bind.JAXBException;
 import java.io.*;
 
 public class Main {
-    public static void main(String [] args) throws IOException {
+    public static void main(String [] args) {
         Dragons dragons = new Dragons();
         if (args.length != 1) {
             System.out.println("нужно ввести путь до файла");

@@ -1,4 +1,4 @@
-package com.itmo.prog_lab5_8.сollection;
+package com.itmo.prog_lab5_8.collection;
 
 import com.itmo.prog_lab5_8.cli.utils.DragonsXmlConverter;
 import com.itmo.prog_lab5_8.models.Color;
@@ -50,7 +50,7 @@ public class Dragons {
     }
 
     public void add(Dragon dragon) throws IncorrectInputException {
-        if (Objects.equals(dragon.getName(), null) || dragon.getName() == "") throw new IncorrectInputException("имя задано некорректно");
+        if (Objects.equals(dragon.getName(), null)) throw new IncorrectInputException("имя задано некорректно");
         if (Objects.equals(dragon.getCoordinates().getX(), null)) throw new IncorrectInputException("координата X задана некорректно");
         if (Objects.equals(dragon.getCoordinates().getY(), null)) throw new IncorrectInputException("координата Y задана некорректно");
         if (Objects.equals(dragon.getCreationDate(), null)) throw new IncorrectInputException("время создания задано некорректно");
@@ -86,7 +86,7 @@ public class Dragons {
                     String description,
                     float weight,
                     DragonCharacter character) {
-        if (Objects.equals(name, null) || name.isEmpty()) throw new IllegalArgumentException("нельзя передовать пустое имя");
+        if (Objects.equals(name, null) || name.isEmpty()) throw new IllegalArgumentException("нельзя передавать пустое имя");
         if (Objects.equals(character, null)) throw new IllegalArgumentException("характер не может быть null");
         Dragon dragon = new Dragon(
                 getUniqueID(),
@@ -116,12 +116,12 @@ public class Dragons {
                     int killerLocationX,
                     int killerLocationY,
                     String killerLocationName) {
-        if (Objects.equals(name, null) || name.equals("")) throw new IllegalArgumentException("нельзя передавать пустое имя");
+        if (name.isEmpty()) throw new IllegalArgumentException("нельзя передавать пустое имя");
         if (Objects.equals(character, null)) throw new IllegalArgumentException("характер не может быть null");
         if (Objects.equals(killerName, null) || killerName.isEmpty()) throw new IllegalArgumentException("нельзя передавать пустое имя убийцы");
         if (Objects.equals(killerEyeColor, null)) throw new IllegalArgumentException("цвет глаз не может быть null");
         if (Objects.equals(killerHeirColor, null)) throw new IllegalArgumentException("цвет волос не может быть null");
-        if (Objects.equals(killerLocationName, null) || killerLocationName == "") throw new IllegalArgumentException("нельзя передавать пустое имя локации");
+        if (killerLocationName.isEmpty()) throw new IllegalArgumentException("нельзя передавать пустое имя локации");
         Dragon dragon = new Dragon(
                 getUniqueID(),
                 name,
@@ -207,7 +207,10 @@ public class Dragons {
     public void addIfMin(Dragon newDragon) throws IncorrectInputException {
         boolean flag = true;
         for (Dragon dragon : dragons) {
-            if (newDragon.compareTo(dragon) < 0) flag = false;
+            if (newDragon.compareTo(dragon) < 0) {
+                flag = false;
+                break;
+            }
         }
         if (flag) add(newDragon);
     }

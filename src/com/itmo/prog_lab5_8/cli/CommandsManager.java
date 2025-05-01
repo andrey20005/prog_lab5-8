@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CommandsManager {
-    private final Map<String, Command> commands = new HashMap<String, Command>();
+    private final Map<String, Command> commands = new HashMap<>();
     private boolean running = true;
 
     public void addCommand(Command command) {

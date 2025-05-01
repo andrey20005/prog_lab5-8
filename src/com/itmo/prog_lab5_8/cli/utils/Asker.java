@@ -5,6 +5,7 @@ import com.itmo.prog_lab5_8.cli.io.TextIO;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
@@ -18,7 +19,7 @@ public class Asker {
 
     private String ask(String message, String prompt, Predicate<String> checker) throws IOException {
         String text = prompt;
-        if (message != null && message != "") text = message + "\n" + prompt;
+        if (!message.isEmpty()) text = message + "\n" + prompt;
         String input = textIO.input(text);
         if (checker.test(input)) return input;
         else throw new IOException();
@@ -157,7 +158,7 @@ public class Asker {
     private boolean yesNo(String message, String prompt) throws IOException {
         try {
             String res = ask(message, prompt, Asker::wordToBoolean);
-            return res == "true";
+            return Objects.equals(res, "true");
         } catch (Exception e) {
             if (textIO instanceof Console) return yesNo("нужно ввести да или нет", prompt);
             throw new IOException("нужно ввести да или нет");

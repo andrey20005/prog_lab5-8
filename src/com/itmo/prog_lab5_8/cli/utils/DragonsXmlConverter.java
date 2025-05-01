@@ -1,8 +1,8 @@
 package com.itmo.prog_lab5_8.cli.utils;
 
 import com.itmo.prog_lab5_8.models.DragonsWrapper;
-import com.itmo.prog_lab5_8.сollection.Dragons;
-import com.itmo.prog_lab5_8.сollection.IncorrectInputException;
+import com.itmo.prog_lab5_8.collection.Dragons;
+import com.itmo.prog_lab5_8.collection.IncorrectInputException;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;

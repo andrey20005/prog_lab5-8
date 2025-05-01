@@ -3,14 +3,13 @@ package com.itmo.prog_lab5_8.cli.commands;
 import com.itmo.prog_lab5_8.cli.io.TextIO;
 import com.itmo.prog_lab5_8.models.*;
 import com.itmo.prog_lab5_8.cli.utils.Asker;
-import com.itmo.prog_lab5_8.сollection.Dragons;
+import com.itmo.prog_lab5_8.collection.Dragons;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class UpdateCommand implements Command{
     Dragons dragons;
@@ -28,7 +27,6 @@ public class UpdateCommand implements Command{
         return "update id {element}: обновить значение элемента коллекции, id которого равен заданному";
     }
 
-    private final Pattern commandNamePattern = Pattern.compile("(?U)^(\\w+) +(\\w+) *$");
     @Override
     public void execute(String command, TextIO textIO) {
         Scanner scanner = new Scanner(command.substring(getName().length() + 1));

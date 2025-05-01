@@ -2,7 +2,6 @@ package com.itmo.prog_lab5_8.models;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.ZonedDateTime;
 
@@ -69,7 +68,7 @@ public class Dragon implements Comparable<Dragon> {
                 killerName,
                 killerHeight,
                 killerEyeColor,
-                killerEyeColor,
+                killerHeirColor,
                 new Location(killerLocationX, killerLocationY, killerLocationName)
                 );
     }

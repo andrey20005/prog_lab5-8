@@ -3,7 +3,7 @@ package com.itmo.prog_lab5_8.cli.commands;
 import com.itmo.prog_lab5_8.cli.io.TextIO;
 import com.itmo.prog_lab5_8.models.*;
 import com.itmo.prog_lab5_8.cli.utils.Asker;
-import com.itmo.prog_lab5_8.сollection.Dragons;
+import com.itmo.prog_lab5_8.collection.Dragons;
 
 import java.io.IOException;
 import java.util.Arrays;

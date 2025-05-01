@@ -1,15 +1,11 @@
 package com.itmo.prog_lab5_8.cli.commands;
 
 import com.itmo.prog_lab5_8.cli.io.TextIO;
-import com.itmo.prog_lab5_8.cli.utils.Asker;
-import com.itmo.prog_lab5_8.сollection.Dragons;
-import com.itmo.prog_lab5_8.сollection.IncorrectInputException;
+import com.itmo.prog_lab5_8.collection.Dragons;
 
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class RemoveByIdCommand implements Command {
     Dragons dragons;
