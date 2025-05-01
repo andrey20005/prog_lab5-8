@@ -1,7 +1,5 @@
 package com.itmo.prog_lab5_8.models;
 
-import org.jetbrains.annotations.NotNull;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -92,7 +90,7 @@ public class Dragon implements Comparable<Dragon> {
     }
 
     @Override
-    public int compareTo(@NotNull Dragon o) {
+    public int compareTo(Dragon o) {
         return Float.compare(weight, o.weight);
     }
 
