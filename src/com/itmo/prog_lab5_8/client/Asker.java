@@ -1,6 +1,7 @@
 package com.itmo.prog_lab5_8.client;
 
 import com.itmo.prog_lab5_8.client.io.*;
+import com.itmo.prog_lab5_8.common.models.Color;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -15,161 +16,100 @@ public class Asker {
         this.textIO = textIO;
     }
 
-    private String ask(String message, String prompt, Predicate<String> checker) throws IOException {
-        String text = prompt;
-        if (message != null && message != "") text = message + "\n" + prompt;
-        String input = textIO.input(text);
-        if (checker.test(input)) return input;
-        else throw new IOException();
+    private String getInput(String message, String prompt) {
+        if (message.isEmpty()) return textIO.input(prompt);
+        else return textIO.input(message + "\n" + prompt);
     }
 
-    private <T> T ask(String message, String prompt, Function<String, T> converter) throws IOException {
-        String input = ask(message, prompt, (String t) -> true);
+    public <T> T ask(String message, String prompt, Function<String, T> converter) {
+        String input = getInput(message, prompt);
         try {
             return converter.apply(input);
         } catch (Exception e) {
-            throw new IOException(e);
+            if (textIO instanceof Console) return ask(e.getMessage(), prompt, converter);
+            throw e;
         }
     }
 
-    private <T> T smartAsk(String message, String prompt, Function<String, T> converter) throws IOException {
-        String input = ask(message, prompt, (String t) -> true);
+    private static long parseLong(String input) {
         try {
-            return converter.apply(input);
-        } catch (Exception e) {
-            if (textIO instanceof Console) return smartAsk("неверный ввод", prompt, converter);
-            throw new IOException(e);
+            return Long.parseLong(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("введи целое число");
         }
     }
 
-    public <T> T ask(String prompt, Function<String, T> converter) throws IOException {
-        return smartAsk("", prompt, converter);
-    }
-
-    private static final Pattern word = Pattern.compile("(?U)^ *(\\w+) *$");
-    private String getWord(String message, String prompt) throws IOException {
+    private static int parseInt(String input) {
         try {
-            String text = ask(message, prompt, (String t) -> true);
-            Matcher matcher = word.matcher(text);
-            if (matcher.find()) {
-                return matcher.group(1);
-            } else {
-                if (textIO instanceof Console) return getWord("нужно ввести слово", prompt);
-                throw new IOException("нужно ввести слово");
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("введи целое число");
         }
     }
 
-    public String getWord(String prompt) throws IOException {return getWord("", prompt);}
-
-    private int getInt(String message, String prompt) throws IOException {
-        Function<String, Integer> f = Integer::parseInt;
+    private static float parseFloat(String input) {
         try {
-            return ask(message, prompt, f);
-        } catch (IOException e) {
-            if (textIO instanceof Console) return getInt("нужно целое число", prompt);
-            throw new IOException("нужно целое число");
+            return Float.parseFloat(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("введи число");
         }
     }
 
-    public int getInt(String prompt) throws IOException {return getInt("", prompt);}
-
-    private int getPositiveInt(String message, String prompt) throws IOException {
-        int res = getInt(message, prompt);
-        if (res > 0) return res;
-        else {
-            if (textIO instanceof Console) return getPositiveInt("Число должно быть положительным", prompt);
-            else throw new IOException("Число должно быть положительным");
-        }
+    private static <T extends Number> T isPositive(T numb) {
+        if(numb.doubleValue() > 0) return numb;
+        throw new IllegalArgumentException("число должно быть положительным");
     }
 
-    public int getPositiveInt(String prompt) throws IOException {return getPositiveInt("", prompt);}
+    private static String parseWord(String input) {
+        input = input.trim();
+        if(input.split(" ").length > 1) throw new IllegalArgumentException("нужно ввести одно слово");
+        return input;
+    }
 
-    private float getFloat(String message, String prompt) throws IOException {
-        Function<String, Float> f = Float::parseFloat;
+    private static Color parseColor(String input) {
+        input = input.toLowerCase();
         try {
-            return ask(message, prompt, f);
-        } catch (IOException e) {
-            if (textIO instanceof Console) return getInt("нужно число", prompt);
-            throw new IOException("нужно число");
+            return Color.valueOf(input);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("цвета " + input.trim() +
+                    " найдено не было\nесть только: " +
+                    Arrays.toString(Color.values()));
         }
     }
 
-    public float getFloat(String prompt) throws IOException {return getFloat("", prompt);}
-
-    private float getPositiveFloat(String message, String prompt) throws IOException {
-        float res = getFloat(message, prompt);
-        if (res > 0) return res;
-        else {
-            if (textIO instanceof Console) return getPositiveFloat("число должно быть положительным", prompt);
-            throw new IOException("число должно быть положительным");
-        }
+    public long getLong(String prompt) {
+        return ask("", prompt, Asker::parseLong);
     }
 
-    public float getPositiveFloat(String prompt) throws IOException {return getPositiveFloat("", prompt);}
-
-    private long getLong(String message, String prompt) throws IOException {
-        Function<String, Long> f = Long::getLong;
-        try {
-            return ask(message, prompt, f);
-        } catch (IOException e) {
-            if (textIO instanceof Console) return getInt("нужно целое число", prompt);
-            throw new IOException("нужно целое число");
-        }
+    public int getInt(String prompt) {
+        return ask("", prompt, Asker::parseInt);
     }
 
-    public long getLong(String prompt) throws IOException {return getLong("", prompt);}
-
-    private double getDouble(String message, String prompt) throws IOException {
-        Function<String, Double> f = Double::parseDouble;
-        try {
-            return ask(message, prompt, f);
-        } catch (IOException e) {
-            if (textIO instanceof Console) return getInt("нужно число", prompt);
-            throw new IOException("нужно число");
-        }
+    public float getFloat(String prompt) {
+        return ask("", prompt, Asker::parseFloat);
     }
 
-    public double getDouble(String prompt) throws IOException {return getDouble("", prompt);}
-
-    private double getPositiveDouble(String message, String prompt) throws IOException {
-        double res = getDouble(message, prompt);
-        if (res > 0) return res;
-        else {
-            if (textIO instanceof Console) return getPositiveDouble("число должно быть положительным", prompt);
-            throw new IOException("число должно быть положительным");
-        }
+    public long getPositiveLong(String prompt) {
+        return ask("", prompt, ((Function<Long, Long>) Asker::isPositive).compose(Asker::parseLong));
     }
 
-    public double getPositiveDouble(String prompt) throws IOException {return getPositiveDouble("", prompt);}
-
-
-    private static String wordToBoolean(String word) {
-        word = word.toLowerCase();
-        if (Arrays.asList("yes", "y", "да", "д", "true", "t").contains(word)) return "true";
-        else if (Arrays.asList("no", "n", "нет", "н", "false", "f").contains(word)) return "false";
-        else throw new RuntimeException();
+    public int getPositiveInt(String prompt) {
+        return ask("", prompt, ((Function<Integer, Integer>) Asker::isPositive).compose(Asker::parseInt));
     }
 
-    private boolean yesNo(String message, String prompt) throws IOException {
-        try {
-            String res = ask(message, prompt, Asker::wordToBoolean);
-            return res == "true";
-        } catch (Exception e) {
-            if (textIO instanceof Console) return yesNo("нужно ввести да или нет", prompt);
-            throw new IOException("нужно ввести да или нет");
-        }
+    public float getPositiveFloat(String prompt) {
+        return ask("", prompt, ((Function<Float, Float>) Asker::isPositive).compose(Asker::parseFloat));
     }
 
-    public boolean yesNo(String prompt) throws IOException {return yesNo("", prompt);}
+    public String getWord(String prompt) {
+        return ask("", prompt, Asker::parseWord);
+    }
 
-    public String getString(String prompt) {
-        try {
-            return ask("", prompt, (String t) -> true);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public String getText(String prompt) {
+        return ask("", prompt, (text) -> text);
+    }
+
+    public Color getColor(String prompt) {
+        return ask(Arrays.toString(Color.values()), prompt, Asker::parseColor);
     }
 }
