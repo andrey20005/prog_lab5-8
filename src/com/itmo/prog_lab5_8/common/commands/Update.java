@@ -4,7 +4,7 @@ import com.itmo.prog_lab5_8.common.Invokers;
 import com.itmo.prog_lab5_8.common.models.Color;
 import com.itmo.prog_lab5_8.common.models.DragonCharacter;
 
-public class Update extends Command {
+public class Update extends ServerCommand {
     private long id;
     private String name;
     private float coordinateX;
@@ -57,7 +57,7 @@ public class Update extends Command {
     }
 
     @Override
-    public void execute(Invokers invokers) {
+    public void execute() {
         try {
             if (haveKiller) {
                 invokers.cm.update(id, name, coordinateX, coordinateY, age, description, weight, character,

@@ -1,6 +1,6 @@
 package com.itmo.prog_lab5_8.common;
 
-import com.itmo.prog_lab5_8.common.commands.Command;
+import com.itmo.prog_lab5_8.common.commands.ServerCommand;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -28,10 +28,10 @@ public class ServerReceiver {
                     ObjectInputStream ois = new ObjectInputStream(is);
                     ) {
                 System.out.println("подключен клиент: " + socket.getInetAddress());
-                Command command = (Command) ois.readObject();
-                command.execute(invokers);
+                ServerCommand serverCommand = (ServerCommand) ois.readObject();
+                serverCommand.execute(invokers);
                 invokers.cm.save();
-                oos.writeObject(command);
+                oos.writeObject(serverCommand);
             } catch (IOException | ClassNotFoundException e) {
                 System.out.println("произошла ошибка при обработке запроса\nошибка: " + e.getMessage());
             }

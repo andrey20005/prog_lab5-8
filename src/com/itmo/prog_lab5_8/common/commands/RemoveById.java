@@ -2,7 +2,7 @@ package com.itmo.prog_lab5_8.common.commands;
 
 import com.itmo.prog_lab5_8.common.Invokers;
 
-public class RemoveById extends Command {
+public class RemoveById extends ServerCommand {
 
     private final long id;
 
@@ -11,7 +11,7 @@ public class RemoveById extends Command {
     }
 
     @Override
-    public void execute(Invokers invokers) {
+    public void execute() {
         try {
             invokers.cm.removeById(id);
             result = "коллекция очищена";

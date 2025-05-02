@@ -1,6 +1,6 @@
 package com.itmo.prog_lab5_8.common;
 
-import com.itmo.prog_lab5_8.common.commands.Command;
+import com.itmo.prog_lab5_8.common.commands.ServerCommand;
 
 import java.io.*;
 import java.net.Socket;
@@ -14,7 +14,7 @@ public class ClientRequester {
         this.port = port;
     }
 
-    public Command request(Command command) {
+    public ServerCommand request(ServerCommand serverCommand) {
         try(
                 Socket socket = new Socket(host, port);
                 OutputStream os = socket.getOutputStream();
@@ -22,8 +22,8 @@ public class ClientRequester {
                 InputStream is = socket.getInputStream();
                 ObjectInputStream ois = new ObjectInputStream(is);
                 ) {
-            oos.writeObject(command);
-            return (Command) ois.readObject();
+            oos.writeObject(serverCommand);
+            return (ServerCommand) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

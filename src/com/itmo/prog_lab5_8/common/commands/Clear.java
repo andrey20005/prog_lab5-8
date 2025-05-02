@@ -2,9 +2,9 @@ package com.itmo.prog_lab5_8.common.commands;
 
 import com.itmo.prog_lab5_8.common.Invokers;
 
-public class Clear extends Command {
+public class Clear extends ServerCommand {
     @Override
-    public void execute(Invokers invokers) {
+    public void execute() {
         try {
             invokers.cm.clear();
             result = "коллекция очищена";

@@ -1,13 +1,10 @@
 package com.itmo.prog_lab5_8.common.commands;
 
-import com.itmo.prog_lab5_8.common.CollectionManager;
 import com.itmo.prog_lab5_8.common.Invokers;
 import com.itmo.prog_lab5_8.common.models.Color;
 import com.itmo.prog_lab5_8.common.models.DragonCharacter;
 
-import java.util.Objects;
-
-public class Add extends Command{
+public class Add extends ServerCommand {
     private String name;
     private float coordinateX;
     private float coordinateY;
@@ -57,7 +54,7 @@ public class Add extends Command{
     }
 
     @Override
-    public void execute(Invokers invokers) {
+    public void execute() {
         try {
             if (haveKiller) invokers.cm.add(name, coordinateX, coordinateY, age, description, weight, character,
                     killerName, killerHeight, killerEyeColor, killerHeirColor, killerLocationX, killerLocationY,
