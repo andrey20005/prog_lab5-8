@@ -1,18 +1,16 @@
 package com.itmo.prog_lab5_8.server.collection;
 
-import com.itmo.prog_lab5_8.common.CollectionManager;
+import com.itmo.prog_lab5_8.common.Invoker;
 import com.itmo.prog_lab5_8.common.models.Color;
 import com.itmo.prog_lab5_8.common.models.Dragon;
 import com.itmo.prog_lab5_8.common.models.DragonCharacter;
-import com.itmo.prog_lab5_8.common.models.ZonedDateTimeAdapter;
 
-import java.io.File;
 import java.time.ZonedDateTime;
 import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Objects;
 
-public class Dragons implements CollectionManager {
+public class Dragons {
     private ZonedDateTime creationTime = ZonedDateTime.now();
     private String path;
     private Collection<Dragon> dragons = new ArrayDeque<>();
@@ -168,7 +166,7 @@ public class Dragons implements CollectionManager {
         return id;
     }
 
-    public boolean haveDragon(long id) {
+    public boolean checkId(long id) {
         for (Dragon dragon : dragons) {
             if (dragon.getId() == id) return true;
         }
@@ -208,7 +206,7 @@ public class Dragons implements CollectionManager {
     }
 
     public void removeById(long id) {
-        if (!haveDragon(id)) throw new IllegalArgumentException("дракон с указанным id не найден");
+        if (!checkId(id)) throw new IllegalArgumentException("дракон с указанным id не найден");
         dragons.removeIf(dragon -> dragon.getId() == id);
     }
 
@@ -262,7 +260,6 @@ public class Dragons implements CollectionManager {
                 '}';
     }
 
-    @Override
     public String show() {
         return this.toString();
     }

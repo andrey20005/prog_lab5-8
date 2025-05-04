@@ -1,14 +1,14 @@
-package com.itmo.prog_lab5_8.server.collection;
+package com.itmo.prog_lab5_8.server;
 
-import com.itmo.prog_lab5_8.common.CollectionManager;
+import com.itmo.prog_lab5_8.common.Invoker;
 import com.itmo.prog_lab5_8.common.models.Color;
 import com.itmo.prog_lab5_8.common.models.DragonCharacter;
 
-public class ProtocolCollectionManager implements CollectionManager {
-    private final CollectionManager cm;
+public class ProtocolInvoker implements Invoker {
+    private final Invoker invoker;
 
-    public ProtocolCollectionManager(CollectionManager cm) {
-        this.cm = cm;
+    public ProtocolInvoker(Invoker invoker) {
+        this.invoker = invoker;
     }
 
     private static void smartPrint(Object ... objects) {
@@ -20,8 +20,8 @@ public class ProtocolCollectionManager implements CollectionManager {
 
     @Override
     public void add(String name, float coordinateX, float coordinateY, int age, String description, float weight, DragonCharacter character) throws IllegalArgumentException {
-        ProtocolCollectionManager.smartPrint(name, coordinateX, coordinateY, age, description, weight, character);
-        cm.add(name, coordinateX, coordinateY, age, description, weight, character);
+        ProtocolInvoker.smartPrint(name, coordinateX, coordinateY, age, description, weight, character);
+        invoker.add(name, coordinateX, coordinateY, age, description, weight, character);
     }
 
     @Override
@@ -29,42 +29,42 @@ public class ProtocolCollectionManager implements CollectionManager {
                     DragonCharacter character, String killerName, double killerHeight, Color killerEyeColor,
                     Color killerHeirColor, int killerLocationX, int killerLocationY,
                     String killerLocationName) throws IllegalArgumentException {
-        ProtocolCollectionManager.smartPrint("add", name, coordinateX, coordinateY, age, description, weight, character,
+        ProtocolInvoker.smartPrint("add", name, coordinateX, coordinateY, age, description, weight, character,
                 killerName, killerHeight, killerEyeColor, killerHeirColor, killerLocationX, killerLocationY,
                 killerLocationName);
-        cm.add(name, coordinateX, coordinateY, age, description, weight, character, killerName, killerHeight,
+        invoker.add(name, coordinateX, coordinateY, age, description, weight, character, killerName, killerHeight,
                 killerEyeColor, killerHeirColor, killerLocationX, killerLocationY, killerLocationName);
     }
 
     @Override
     public void clear() {
-        ProtocolCollectionManager.smartPrint("clear");
-        cm.clear();
+        ProtocolInvoker.smartPrint("clear");
+        invoker.clear();
     }
 
     @Override
     public void removeById(long id) throws IllegalArgumentException {
-        ProtocolCollectionManager.smartPrint("remove_by_id", id);
-        cm.removeById(id);
+        ProtocolInvoker.smartPrint("remove_by_id", id);
+        invoker.removeById(id);
     }
 
     @Override
     public String show() {
-        ProtocolCollectionManager.smartPrint("show");
-        return cm.show();
+        ProtocolInvoker.smartPrint("show");
+        return invoker.show();
     }
 
     @Override
-    public boolean haveDragon(long id) {
-        ProtocolCollectionManager.smartPrint("have_dragon", id);
-        return cm.haveDragon(id);
+    public boolean checkId(long id) {
+        ProtocolInvoker.smartPrint("have_dragon", id);
+        return invoker.checkId(id);
     }
 
     @Override
     public void update(long id, String name, float coordinateX, float coordinateY, int age, String description,
                        float weight, DragonCharacter character) throws IllegalArgumentException {
-        ProtocolCollectionManager.smartPrint("update", id, name, coordinateX, coordinateY, age, description, weight, character);
-        cm.update(id, name, coordinateX, coordinateY, age, description, weight, character);
+        ProtocolInvoker.smartPrint("update", id, name, coordinateX, coordinateY, age, description, weight, character);
+        invoker.update(id, name, coordinateX, coordinateY, age, description, weight, character);
     }
 
     @Override
@@ -72,17 +72,17 @@ public class ProtocolCollectionManager implements CollectionManager {
                        float weight, DragonCharacter character, String killerName, double killerHeight,
                        Color killerEyeColor, Color killerHeirColor, int killerLocationX, int killerLocationY,
                        String killerLocationName) throws IllegalArgumentException {
-        ProtocolCollectionManager.smartPrint("update", id, name, coordinateX, coordinateY, age, description,
+        ProtocolInvoker.smartPrint("update", id, name, coordinateX, coordinateY, age, description,
                 weight, character, killerName, killerHeight, killerEyeColor, killerHeirColor, killerLocationX,
                 killerLocationY, killerLocationName);
-        cm.update(id, name, coordinateX, coordinateY, age, description,
+        invoker.update(id, name, coordinateX, coordinateY, age, description,
                 weight, character, killerName, killerHeight, killerEyeColor, killerHeirColor, killerLocationX,
                 killerLocationY, killerLocationName);
     }
 
     @Override
     public void save() {
-        ProtocolCollectionManager.smartPrint("save");
-        cm.save();
+        ProtocolInvoker.smartPrint("save");
+        invoker.save();
     }
 }

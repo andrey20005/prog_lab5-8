@@ -1,6 +1,6 @@
 package com.itmo.prog_lab5_8.common;
 
-import com.itmo.prog_lab5_8.common.commands.ServerCommand;
+import com.itmo.prog_lab5_8.common.commands.Command;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -18,7 +18,7 @@ public class ServerReceiver {
         }
     }
 
-    public void run(Invokers invokers) {
+    public void run(Invoker invoker) {
         while (true) {
             try(
                     Socket socket = serverSocket.accept();
@@ -28,9 +28,9 @@ public class ServerReceiver {
                     ObjectInputStream ois = new ObjectInputStream(is);
                     ) {
                 System.out.println("подключен клиент: " + socket.getInetAddress());
-                ServerCommand serverCommand = (ServerCommand) ois.readObject();
-                serverCommand.execute(invokers);
-                invokers.cm.save();
+                Command serverCommand = (Command) ois.readObject();
+                serverCommand.execute(invoker);
+                invoker.save();
                 oos.writeObject(serverCommand);
             } catch (IOException | ClassNotFoundException e) {
                 System.out.println("произошла ошибка при обработке запроса\nошибка: " + e.getMessage());

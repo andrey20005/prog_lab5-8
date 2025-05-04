@@ -1,10 +1,10 @@
 package com.itmo.prog_lab5_8.common.commands;
 
-import com.itmo.prog_lab5_8.common.Invokers;
+import com.itmo.prog_lab5_8.common.Invoker;
 import com.itmo.prog_lab5_8.common.models.Color;
 import com.itmo.prog_lab5_8.common.models.DragonCharacter;
 
-public class Update extends ServerCommand {
+public class Update extends AbstractStandardCommand {
     private long id;
     private String name;
     private float coordinateX;
@@ -57,14 +57,14 @@ public class Update extends ServerCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute(Invoker invoker) {
         try {
             if (haveKiller) {
-                invokers.cm.update(id, name, coordinateX, coordinateY, age, description, weight, character,
+                invoker.update(id, name, coordinateX, coordinateY, age, description, weight, character,
                         killerName, killerHeight, killerEyeColor, killerHeirColor, killerLocationX, killerLocationY,
                         killerLocationName);
             } else {
-                invokers.cm.update(id, name, coordinateX, coordinateY, age, description, weight, character);
+                invoker.update(id, name, coordinateX, coordinateY, age, description, weight, character);
             }
             result = "дракон был обновлен";
         } catch (RuntimeException e) {
