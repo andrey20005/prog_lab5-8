@@ -1,7 +1,5 @@
 package com.itmo.prog_lab5_8.common;
 
-import com.itmo.prog_lab5_8.common.commands.ServerCommand;
-
 import java.io.*;
 import java.net.Socket;
 

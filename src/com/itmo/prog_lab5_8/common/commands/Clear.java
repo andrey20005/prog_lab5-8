@@ -1,12 +1,12 @@
 package com.itmo.prog_lab5_8.common.commands;
 
-import com.itmo.prog_lab5_8.common.Invokers;
+import com.itmo.prog_lab5_8.common.Invoker;
 
-public class Clear extends ServerCommand {
+public class Clear extends AbstractStandardCommand {
     @Override
-    public void execute() {
+    public void execute(Invoker invoker) {
         try {
-            invokers.cm.clear();
+            invoker.clear();
             result = "коллекция очищена";
         } catch (RuntimeException e) {
             result = "во время исполнения команды произошла ошибка:\n" + e.getMessage();

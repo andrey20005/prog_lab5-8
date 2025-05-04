@@ -1,10 +1,10 @@
 package com.itmo.prog_lab5_8.common.commands;
 
-import com.itmo.prog_lab5_8.common.Invokers;
+import com.itmo.prog_lab5_8.common.Invoker;
 import com.itmo.prog_lab5_8.common.models.Color;
 import com.itmo.prog_lab5_8.common.models.DragonCharacter;
 
-public class Add extends ServerCommand {
+public class Add extends AbstractStandardCommand {
     private String name;
     private float coordinateX;
     private float coordinateY;
@@ -54,12 +54,12 @@ public class Add extends ServerCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute(Invoker invoker) {
         try {
-            if (haveKiller) invokers.cm.add(name, coordinateX, coordinateY, age, description, weight, character,
+            if (haveKiller) invoker.add(name, coordinateX, coordinateY, age, description, weight, character,
                     killerName, killerHeight, killerEyeColor, killerHeirColor, killerLocationX, killerLocationY,
                     killerLocationName);
-            else invokers.cm.add(name, coordinateX, coordinateY, age, description, weight, character);
+            else invoker.add(name, coordinateX, coordinateY, age, description, weight, character);
             result = "в коллекцию успешно добавлен новый дракон";
         } catch (IllegalArgumentException e) {
             result = "переданные аргументы не корректны: \n" + e.getMessage();
