@@ -2,13 +2,10 @@ package com.itmo.prog_lab5_8.client;
 
 import com.itmo.prog_lab5_8.client.io.*;
 import com.itmo.prog_lab5_8.common.models.Color;
+import com.itmo.prog_lab5_8.common.models.DragonCharacter;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Asker {
     TextIO textIO;
@@ -35,7 +32,7 @@ public class Asker {
         try {
             return Long.parseLong(input);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("введи целое число");
+            throw new IllegalArgumentException("введите целое число");
         }
     }
 
@@ -43,7 +40,7 @@ public class Asker {
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("введи целое число");
+            throw new IllegalArgumentException("введите целое число");
         }
     }
 
@@ -51,7 +48,15 @@ public class Asker {
         try {
             return Float.parseFloat(input);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("введи число");
+            throw new IllegalArgumentException("введите число");
+        }
+    }
+
+    private static double parseDouble(String input) {
+        try {
+            return Double.parseDouble(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("введите число");
         }
     }
 
@@ -61,13 +66,14 @@ public class Asker {
     }
 
     private static String parseWord(String input) {
+        if(input.trim().isEmpty()) throw new IllegalArgumentException("нельзя оставлять поле пустым");
         input = input.trim();
-        if(input.split(" ").length > 1) throw new IllegalArgumentException("нужно ввести одно слово");
+        if(input.split(" +").length > 1) throw new IllegalArgumentException("нужно ввести одно слово");
         return input;
     }
 
     private static Color parseColor(String input) {
-        input = input.toLowerCase();
+        input = parseWord(input).toUpperCase();
         try {
             return Color.valueOf(input);
         } catch (IllegalArgumentException e) {
@@ -75,6 +81,25 @@ public class Asker {
                     " найдено не было\nесть только: " +
                     Arrays.toString(Color.values()));
         }
+    }
+
+    private static DragonCharacter parseDragonCharacter(String input) {
+        input = parseWord(input).toUpperCase();
+        try {
+            return DragonCharacter.valueOf(input);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("характер " + input.trim() +
+                    " найден не был\nесть только: " +
+                    Arrays.toString(DragonCharacter.values()));
+        }
+    }
+
+    private static boolean parseYesNo(String input) {
+        if(input.trim().isEmpty()) throw new IllegalArgumentException("нельзя оставлять поле пустым");
+        input = input.toLowerCase().trim();
+        if(Arrays.asList("yes", "y", "да", "д", "true", "t").contains(input)) return true;
+        if(Arrays.asList("no", "n", "но", "н", "false", "f").contains(input)) return false;
+        throw new IllegalArgumentException("не получилось понять ответ[да|нет]");
     }
 
     public long getLong(String prompt) {
@@ -89,6 +114,10 @@ public class Asker {
         return ask("", prompt, Asker::parseFloat);
     }
 
+    public double getDouble(String prompt) {
+        return ask("", prompt, Asker::parseDouble);
+    }
+
     public long getPositiveLong(String prompt) {
         return ask("", prompt, ((Function<Long, Long>) Asker::isPositive).compose(Asker::parseLong));
     }
@@ -101,6 +130,10 @@ public class Asker {
         return ask("", prompt, ((Function<Float, Float>) Asker::isPositive).compose(Asker::parseFloat));
     }
 
+    public double getPositiveDouble(String prompt) {
+        return ask("", prompt, ((Function<Double, Double>) Asker::isPositive).compose(Asker::parseDouble));
+    }
+
     public String getWord(String prompt) {
         return ask("", prompt, Asker::parseWord);
     }
@@ -111,5 +144,13 @@ public class Asker {
 
     public Color getColor(String prompt) {
         return ask(Arrays.toString(Color.values()), prompt, Asker::parseColor);
+    }
+
+    public DragonCharacter getDragonCharacter(String prompt) {
+        return ask(Arrays.toString(DragonCharacter.values()), prompt, Asker::parseDragonCharacter);
+    }
+
+    public boolean getYesNo(String prompt) {
+        return ask("", prompt, Asker::parseYesNo);
     }
 }

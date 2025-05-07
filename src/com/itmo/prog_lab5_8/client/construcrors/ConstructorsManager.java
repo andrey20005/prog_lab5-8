@@ -2,12 +2,12 @@ package com.itmo.prog_lab5_8.client.construcrors;
 
 import com.itmo.prog_lab5_8.client.io.TextIO;
 import com.itmo.prog_lab5_8.common.commands.Command;
-import com.itmo.prog_lab5_8.common.commands.ServerCommand;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class ConstructorsManager implements CommandConstructor{
-    Map<String, CommandConstructor> constructors;
+    Map<String, CommandConstructor> constructors = new HashMap<>();
 
     public ConstructorsManager(CommandConstructor ... constructors) {
         for (CommandConstructor constructor : constructors) {
@@ -15,13 +15,17 @@ public class ConstructorsManager implements CommandConstructor{
         }
     }
 
+    public void add(CommandConstructor constructor) {
+        this.constructors.put(constructor.getName(), constructor);
+    }
+
     @Override
-    public Command getCommand(String[] command, TextIO io) throws IllegalArgumentException {
-        if(command.length == 0) throw new IllegalArgumentException("команда пустая");
+    public Command getCommand(String[] input, TextIO io) throws IllegalArgumentException {
+        if(input.length == 0) throw new IllegalArgumentException("запрос пустой");
         try {
-            return constructors.get(command[0]).getCommand(command, io);
+            return constructors.get(input[0]).getCommand(input, io);
         } catch (NullPointerException e) {
-            throw new IllegalArgumentException("команда " + command[0] + " не найдена");
+            throw new IllegalArgumentException("команда " + input[0] + " не найдена");
         }
     }
 
