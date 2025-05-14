@@ -22,7 +22,7 @@ public class Main {
             ServerReceiver sr = new ServerReceiver(port);
             System.out.println("сервер поднят\n" + "порт: " + port);
             sr.run(new ProtocolInvoker(new ServerInvoker(dragons)));
-        } catch (JAXBException|RuntimeException e) {
+        } catch (JAXBException e) {
             System.out.println("не получилось открыть файл, скорее всего в нем допущена ошибка");
             throw new RuntimeException(e);
         }

@@ -9,6 +9,8 @@ import java.time.ZonedDateTime;
 import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Dragons {
     private ZonedDateTime creationTime = ZonedDateTime.now();
@@ -30,29 +32,13 @@ public class Dragons {
     }
 
     public void setDragons(Collection<Dragon> dragons) {
-        for (Dragon dragon : dragons) {
-            if (Objects.equals(dragon.getId(), null)) throw new IllegalArgumentException("индекс дракона должен быть задан корректно");
-            int counter = 0;
-            for (Dragon dragon1 : dragons) if (Objects.equals(dragon.getId(), dragon1.getId())) counter++;
-            if (counter >= 2) throw new IllegalArgumentException("Все индексы должны быть уникальными");
-            if (Objects.equals(dragon.getName(), null) || Objects.equals(dragon.getName(), "")) throw new IllegalArgumentException("имя задано некорректно");
-            if (Objects.equals(dragon.getCoordinates().getX(), null)) throw new IllegalArgumentException("координата X задана некорректно");
-            if (Objects.equals(dragon.getCoordinates().getY(), null)) throw new IllegalArgumentException("координата Y задана некорректно");
-            if (Objects.equals(dragon.getCreationDate(), null)) throw new IllegalArgumentException("время создания задано некорректно");
-            if (dragon.getAge() <= 0) throw new IllegalArgumentException("возраст задан некорректно");
-            if (Objects.equals(dragon.getWeight(), null) || dragon.getWeight() <= 0) throw new IllegalArgumentException("вес задан некорректно");
-            if (Objects.equals(dragon.getCharacter(), null)) throw new IllegalArgumentException("характер задан некорректно");
-            if (!Objects.equals(dragon.getKiller(), null)) {
-                if (Objects.equals(dragon.getKiller().getName(), null)) throw new IllegalArgumentException("имя убийцы задано некорректно");
-                if (dragon.getKiller().getHeight() <= 0) throw new IllegalArgumentException("рост убийцы задан некорректно");
-                if (Objects.equals(dragon.getKiller().getEyeColor(), null)) throw new IllegalArgumentException("цвет глаз убийцы задано некорректно");
-                if (Objects.equals(dragon.getKiller().getHairColor(), null)) throw new IllegalArgumentException("цвет волос убийцы задан некорректно");
-                if (Objects.equals(dragon.getKiller().getLocation(), null)) throw new IllegalArgumentException("локация убийцы задана некорректно");
-                if (Objects.equals(dragon.getKiller().getLocation().getY(), null)) throw new IllegalArgumentException("Y локации убийцы задано некорректно");
-                if (Objects.equals(dragon.getKiller().getLocation().getName(), null)) throw new IllegalArgumentException("названия локации убийцы задано некорректно");
+        if (dragons.stream().allMatch(
+                dragon -> dragons.stream().filter(dragon1 -> dragon.getId() == dragon1.getId()).count() == 1
+        )) {
+            if (dragons.stream().allMatch(Dragon::isCorrect)){
+                this.dragons = dragons;
             }
-        }
-        this.dragons = dragons;
+        } else throw new IllegalArgumentException("все id должны быть уникальны");
     }
 
     public int getLength() {
@@ -60,33 +46,16 @@ public class Dragons {
     }
 
     public void add(Dragon dragon) throws IllegalArgumentException {
-        if (Objects.equals(dragon.getName(), null)) throw new IllegalArgumentException("имя задано некорректно");
-        if (Objects.equals(dragon.getCoordinates().getX(), null)) throw new IllegalArgumentException("координата X задана некорректно");
-        if (Objects.equals(dragon.getCoordinates().getY(), null)) throw new IllegalArgumentException("координата Y задана некорректно");
-        if (Objects.equals(dragon.getCreationDate(), null)) throw new IllegalArgumentException("время создания задано некорректно");
-        if (dragon.getAge() <= 0) throw new IllegalArgumentException("возраст задан некорректно");
-        if (Objects.equals(dragon.getWeight(), null) || dragon.getWeight() <= 0) throw new IllegalArgumentException("вес задан некорректно");
-        if (Objects.equals(dragon.getCharacter(), null)) throw new IllegalArgumentException("характер задан некорректно");
-        if (!Objects.equals(dragon.getKiller(), null)) {
-            if (Objects.equals(dragon.getKiller().getName(), null)) throw new IllegalArgumentException("имя убийцы задано некорректно");
-            if (dragon.getKiller().getHeight() <= 0) throw new IllegalArgumentException("рост убийцы задан некорректно");
-            if (Objects.equals(dragon.getKiller().getEyeColor(), null)) throw new IllegalArgumentException("цвет глаз убийцы задано некорректно");
-            if (Objects.equals(dragon.getKiller().getHairColor(), null)) throw new IllegalArgumentException("цвет волос убийцы задан некорректно");
-            if (Objects.equals(dragon.getKiller().getLocation(), null)) throw new IllegalArgumentException("локация убийцы задана некорректно");
-            if (Objects.equals(dragon.getKiller().getLocation().getY(), null)) throw new IllegalArgumentException("Y локации убийцы задано некорректно");
-            if (Objects.equals(dragon.getKiller().getLocation().getName(), null)) throw new IllegalArgumentException("названия локации убийцы задано некорректно");
-        }
-        Dragon newDragon = new Dragon();
-        newDragon.setId(getUniqueID());
-        newDragon.setName(dragon.getName());
-        newDragon.setCoordinates(dragon.getCoordinates());
-        newDragon.setCreationDate(dragon.getCreationDate());
-        newDragon.setAge(dragon.getAge());
-        newDragon.setDescription(dragon.getDescription());
-        newDragon.setWeight(dragon.getWeight());
-        newDragon.setCharacter(dragon.getCharacter());
-        newDragon.setKiller(dragon.getKiller());
-        dragons.add(newDragon);
+        dragon.isCorrect();
+        dragon.setId(getUniqueID());
+        dragons.add(dragon);
+    }
+
+    public void update(Dragon newDragon) {
+        if (checkId(newDragon.getId())) {
+            removeById(newDragon.getId());
+            add(newDragon);
+        } else throw new IllegalArgumentException("дракона с таким индексом не найдено");
     }
 
     public void add(String name,
@@ -167,10 +136,7 @@ public class Dragons {
     }
 
     public boolean checkId(long id) {
-        for (Dragon dragon : dragons) {
-            if (dragon.getId() == id) return true;
-        }
-        return false;
+        return dragons.stream().anyMatch(dragon -> dragon.getId() == id);
     }
 
     public void update(long id,
@@ -215,14 +181,7 @@ public class Dragons {
     }
 
     public void addIfMin(Dragon newDragon) throws IllegalArgumentException {
-        boolean flag = true;
-        for (Dragon dragon : dragons) {
-            if (newDragon.compareTo(dragon) < 0) {
-                flag = false;
-                break;
-            }
-        }
-        if (flag) add(newDragon);
+        if (dragons.stream().allMatch(dragon -> newDragon.compareTo(dragon) < 0)) add(newDragon);
     }
 
     public void setCreationTime(ZonedDateTime creationTime) {

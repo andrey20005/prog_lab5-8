@@ -2,6 +2,7 @@ package com.itmo.prog_lab5_8.server;
 
 import com.itmo.prog_lab5_8.common.Invoker;
 import com.itmo.prog_lab5_8.common.models.Color;
+import com.itmo.prog_lab5_8.common.models.Dragon;
 import com.itmo.prog_lab5_8.common.models.DragonCharacter;
 
 public class ProtocolInvoker implements Invoker {
@@ -19,21 +20,10 @@ public class ProtocolInvoker implements Invoker {
     }
 
     @Override
-    public void add(String name, float coordinateX, float coordinateY, int age, String description, float weight, DragonCharacter character) throws IllegalArgumentException {
-        ProtocolInvoker.smartPrint(name, coordinateX, coordinateY, age, description, weight, character);
-        invoker.add(name, coordinateX, coordinateY, age, description, weight, character);
-    }
-
-    @Override
-    public void add(String name, float coordinateX, float coordinateY, int age, String description, float weight,
-                    DragonCharacter character, String killerName, double killerHeight, Color killerEyeColor,
-                    Color killerHeirColor, int killerLocationX, int killerLocationY,
-                    String killerLocationName) throws IllegalArgumentException {
-        ProtocolInvoker.smartPrint("add", name, coordinateX, coordinateY, age, description, weight, character,
-                killerName, killerHeight, killerEyeColor, killerHeirColor, killerLocationX, killerLocationY,
-                killerLocationName);
-        invoker.add(name, coordinateX, coordinateY, age, description, weight, character, killerName, killerHeight,
-                killerEyeColor, killerHeirColor, killerLocationX, killerLocationY, killerLocationName);
+    public void add(Dragon dragon) {
+        System.out.println("add");
+        ProtocolInvoker.smartPrint(dragon);
+        invoker.add(dragon);
     }
 
     @Override
@@ -61,23 +51,10 @@ public class ProtocolInvoker implements Invoker {
     }
 
     @Override
-    public void update(long id, String name, float coordinateX, float coordinateY, int age, String description,
-                       float weight, DragonCharacter character) throws IllegalArgumentException {
-        ProtocolInvoker.smartPrint("update", id, name, coordinateX, coordinateY, age, description, weight, character);
-        invoker.update(id, name, coordinateX, coordinateY, age, description, weight, character);
-    }
-
-    @Override
-    public void update(long id, String name, float coordinateX, float coordinateY, int age, String description,
-                       float weight, DragonCharacter character, String killerName, double killerHeight,
-                       Color killerEyeColor, Color killerHeirColor, int killerLocationX, int killerLocationY,
-                       String killerLocationName) throws IllegalArgumentException {
-        ProtocolInvoker.smartPrint("update", id, name, coordinateX, coordinateY, age, description,
-                weight, character, killerName, killerHeight, killerEyeColor, killerHeirColor, killerLocationX,
-                killerLocationY, killerLocationName);
-        invoker.update(id, name, coordinateX, coordinateY, age, description,
-                weight, character, killerName, killerHeight, killerEyeColor, killerHeirColor, killerLocationX,
-                killerLocationY, killerLocationName);
+    public void update(Dragon dragon) {
+        System.out.println("add");
+        ProtocolInvoker.smartPrint(dragon);
+        invoker.update(dragon);
     }
 
     @Override

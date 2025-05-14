@@ -2,9 +2,10 @@ package com.itmo.prog_lab5_8.common.models;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import java.io.Serializable;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Person {
+public class Person implements Serializable {
     private String name; //Поле не может быть null, Строка не может быть пустой
     private double height; //Значение поля должно быть больше 0
     private Color eyeColor; //Поле не может быть null

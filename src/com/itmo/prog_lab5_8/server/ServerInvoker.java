@@ -2,6 +2,7 @@ package com.itmo.prog_lab5_8.server;
 
 import com.itmo.prog_lab5_8.common.Invoker;
 import com.itmo.prog_lab5_8.common.models.Color;
+import com.itmo.prog_lab5_8.common.models.Dragon;
 import com.itmo.prog_lab5_8.common.models.DragonCharacter;
 import com.itmo.prog_lab5_8.server.collection.Dragons;
 
@@ -13,13 +14,8 @@ public class ServerInvoker implements Invoker {
     }
 
     @Override
-    public void add(String name, float coordinateX, float coordinateY, int age, String description, float weight, DragonCharacter character) throws IllegalArgumentException {
-        dragons.add(name, coordinateX, coordinateY, age, description, weight, character);
-    }
-
-    @Override
-    public void add(String name, float coordinateX, float coordinateY, int age, String description, float weight, DragonCharacter character, String killerName, double killerHeight, Color killerEyeColor, Color killerHeirColor, int killerLocationX, int killerLocationY, String killerLocationName) throws IllegalArgumentException {
-        dragons.add(name, coordinateX, coordinateY, age, description, weight, character, killerName, killerHeight, killerEyeColor, killerHeirColor, killerLocationX, killerLocationY, killerLocationName);
+    public void add(Dragon dragon) {
+        dragons.add(dragon);
     }
 
     @Override
@@ -43,13 +39,8 @@ public class ServerInvoker implements Invoker {
     }
 
     @Override
-    public void update(long id, String name, float coordinateX, float coordinateY, int age, String description, float weight, DragonCharacter character) throws IllegalArgumentException {
-        dragons.update(id, name, coordinateX, coordinateY, age, description, weight, character);
-    }
-
-    @Override
-    public void update(long id, String name, float coordinateX, float coordinateY, int age, String description, float weight, DragonCharacter character, String killerName, double killerHeight, Color killerEyeColor, Color killerHeirColor, int killerLocationX, int killerLocationY, String killerLocationName) throws IllegalArgumentException {
-        dragons.update(id, name, coordinateX, coordinateY, age, description, weight, character, killerName, killerHeight, killerEyeColor, killerHeirColor, killerLocationX, killerLocationY, killerLocationName);
+    public void update(Dragon dragon) {
+        dragons.update(dragon);
     }
 
     @Override

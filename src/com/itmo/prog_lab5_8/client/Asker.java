@@ -2,8 +2,10 @@ package com.itmo.prog_lab5_8.client;
 
 import com.itmo.prog_lab5_8.client.io.*;
 import com.itmo.prog_lab5_8.common.models.Color;
+import com.itmo.prog_lab5_8.common.models.Dragon;
 import com.itmo.prog_lab5_8.common.models.DragonCharacter;
 
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.function.Function;
 
@@ -16,6 +18,28 @@ public class Asker {
     private String getInput(String message, String prompt) {
         if (message.isEmpty()) return textIO.input(prompt);
         else return textIO.input(message + "\n" + prompt);
+    }
+
+    public Dragon getDragon() {
+        String name = getWord("имя дракона: ");
+        float coordinateX = getFloat("координата x: ");
+        float coordinateY = getFloat("координата y: ");
+        int age = getPositiveInt("возраст дракона: ");
+        String description = getText("описание дракона: ");
+        float weight = getPositiveFloat("вес дракона: ");
+        DragonCharacter character = getDragonCharacter("характер дракона: ");
+        boolean haveKiller = getYesNo("есть ли убийца[yes|no]: ");
+        if(!haveKiller) return new Dragon(-1L, name, coordinateX, coordinateY, ZonedDateTime.now(), age, description, weight, character);
+        else return new Dragon(
+                -1L, name, coordinateX, coordinateY, ZonedDateTime.now(), age, description, weight, character,
+                getWord("имя убийцы: "),
+                getPositiveDouble("рост убийцы: "),
+                getColor("цвет глаз: "),
+                getColor("цвет волос: "),
+                getInt("координата Х убийцы: "),
+                getInt("координата У убийцы: "),
+                getWord("местоположение убийцы(название): ")
+        );
     }
 
     public <T> T ask(String message, String prompt, Function<String, T> converter) {

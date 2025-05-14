@@ -3,10 +3,12 @@ package com.itmo.prog_lab5_8.common.models;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Dragon implements Comparable<Dragon> {
+public class Dragon implements Comparable<Dragon>, Serializable {
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
@@ -71,6 +73,26 @@ public class Dragon implements Comparable<Dragon> {
                 killerHeirColor,
                 new Location(killerLocationX, killerLocationY, killerLocationName)
                 );
+    }
+
+    public boolean isCorrect() throws IllegalArgumentException {
+        if (Objects.equals(getName(), null)) throw new IllegalArgumentException("имя задано некорректно");
+        if (Objects.equals(getCoordinates().getX(), null)) throw new IllegalArgumentException("координата X задана некорректно");
+        if (Objects.equals(getCoordinates().getY(), null)) throw new IllegalArgumentException("координата Y задана некорректно");
+        if (Objects.equals(getCreationDate(), null)) throw new IllegalArgumentException("время создания задано некорректно");
+        if (getAge() <= 0) throw new IllegalArgumentException("возраст задан некорректно");
+        if (Objects.equals(getWeight(), null) || getWeight() <= 0) throw new IllegalArgumentException("вес задан некорректно");
+        if (Objects.equals(getCharacter(), null)) throw new IllegalArgumentException("характер задан некорректно");
+        if (!Objects.equals(getKiller(), null)) {
+            if (Objects.equals(getKiller().getName(), null)) throw new IllegalArgumentException("имя убийцы задано некорректно");
+            if (getKiller().getHeight() <= 0) throw new IllegalArgumentException("рост убийцы задан некорректно");
+            if (Objects.equals(getKiller().getEyeColor(), null)) throw new IllegalArgumentException("цвет глаз убийцы задано некорректно");
+            if (Objects.equals(getKiller().getHairColor(), null)) throw new IllegalArgumentException("цвет волос убийцы задан некорректно");
+            if (Objects.equals(getKiller().getLocation(), null)) throw new IllegalArgumentException("локация убийцы задана некорректно");
+            if (Objects.equals(getKiller().getLocation().getY(), null)) throw new IllegalArgumentException("Y локации убийцы задано некорректно");
+            if (Objects.equals(getKiller().getLocation().getName(), null)) throw new IllegalArgumentException("названия локации убийцы задано некорректно");
+        }
+        return true;
     }
 
     @Override

@@ -5,13 +5,14 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.ArrayDeque;
 import java.util.Collection;
 
 @XmlRootElement(name = "dragons")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class DragonsWrapper {
+public class DragonsWrapper implements Serializable {
     @XmlJavaTypeAdapter(ZonedDateTimeAdapter.class)
     private ZonedDateTime creationTime = ZonedDateTime.now();
     @XmlElement(name = "dragon")

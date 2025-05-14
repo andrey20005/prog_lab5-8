@@ -14,7 +14,7 @@ public class RemoveById extends AbstractStandardCommand {
     public void execute(Invoker invoker) {
         try {
             invoker.removeById(id);
-            result = "коллекция очищена";
+            result = "элемент убран";
         } catch (IllegalArgumentException e) {
             result = "не найдено дракона с таким id";
         } catch (RuntimeException e) {

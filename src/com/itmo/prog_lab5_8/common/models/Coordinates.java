@@ -2,10 +2,11 @@ package com.itmo.prog_lab5_8.common.models;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import java.io.Serializable;
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Coordinates {
+public class Coordinates implements Serializable {
     private Float x; //Поле не может быть null
     private Float y; //Поле не может быть null
 

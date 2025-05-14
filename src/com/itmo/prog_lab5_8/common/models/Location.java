@@ -2,9 +2,10 @@ package com.itmo.prog_lab5_8.common.models;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import java.io.Serializable;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Location {
+public class Location implements Serializable {
     private int x;
     private Integer y = 0; //Поле не может быть null
     private String name = "not named"; //Строка не может быть пустой, Поле может быть null

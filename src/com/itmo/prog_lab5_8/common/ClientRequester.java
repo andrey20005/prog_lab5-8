@@ -4,6 +4,7 @@ import com.itmo.prog_lab5_8.common.commands.Command;
 
 import java.io.*;
 import java.net.Socket;
+import java.nio.channels.Channel;
 
 public class ClientRequester {
     private String host;
