@@ -6,15 +6,15 @@ import java.io.*;
 import java.net.Socket;
 
 public class ClientRequester {
-    private final String host;
-    private final int port;
+    private String host;
+    private int port;
 
     public ClientRequester(String host, int port) {
         this.host = host;
         this.port = port;
     }
 
-    public Command request(Command serverCommand) throws ClassNotFoundException {
+    public Command request(Command serverCommand) throws ClassNotFoundException, IOException {
         try(
                 Socket socket = new Socket(host, port);
                 OutputStream os = socket.getOutputStream();
@@ -24,8 +24,22 @@ public class ClientRequester {
                 ) {
             oos.writeObject(serverCommand);
             return (Command) ois.readObject();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public String getHost() {
+        return host;
     }
 }

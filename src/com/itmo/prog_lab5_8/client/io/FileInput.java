@@ -1,6 +1,7 @@
 package com.itmo.prog_lab5_8.client.io;
 
 import java.io.*;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class FileInput implements TextInput{
@@ -21,9 +22,13 @@ public class FileInput implements TextInput{
     @Override
     public String input() {
         counter++;
-        String text = scanner.nextLine();
-        lastInput = text;
-        return text;
+        try {
+            String text = scanner.nextLine();
+            lastInput = text;
+            return text;
+        } catch (NoSuchElementException e) {
+            throw new IllegalArgumentException("файл обрывается");
+        }
     }
 
     @Override

@@ -15,6 +15,12 @@ public class ConstructorsManager implements CommandConstructor{
         }
     }
 
+    public String getHelp() {
+        StringBuilder help = new StringBuilder();
+        constructors.forEach((name, constructor) -> help.append(constructor.getDescription() + "\n"));
+        return help.toString();
+    }
+
     public void add(CommandConstructor constructor) {
         this.constructors.put(constructor.getName(), constructor);
     }
@@ -36,6 +42,8 @@ public class ConstructorsManager implements CommandConstructor{
 
     @Override
     public String getDescription() {
-        return "";
+        StringBuilder help = new StringBuilder();
+        constructors.forEach((name, constructor) -> help.append(constructor.getDescription() + "\n"));
+        return help.toString();
     }
 }
