@@ -1,6 +1,5 @@
 package com.itmo.prog_lab5_8.server.collection;
 
-import com.itmo.prog_lab5_8.common.Invoker;
 import com.itmo.prog_lab5_8.common.models.Color;
 import com.itmo.prog_lab5_8.common.models.Dragon;
 import com.itmo.prog_lab5_8.common.models.DragonCharacter;
@@ -9,11 +8,9 @@ import java.time.ZonedDateTime;
 import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Dragons {
-    private ZonedDateTime creationTime = ZonedDateTime.now();
+    private ZonedDateTime creationTime;
     private String path;
     private Collection<Dragon> dragons = new ArrayDeque<>();
 
@@ -33,7 +30,7 @@ public class Dragons {
 
     public void setDragons(Collection<Dragon> dragons) {
         if (dragons.stream().allMatch(
-                dragon -> dragons.stream().filter(dragon1 -> dragon.getId() == dragon1.getId()).count() == 1
+                dragon -> dragons.stream().filter(dragon1 -> Objects.equals(dragon.getId(), dragon1.getId())).count() == 1
         )) {
             if (dragons.stream().allMatch(Dragon::isCorrect)){
                 this.dragons = dragons;

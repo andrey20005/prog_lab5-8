@@ -4,7 +4,6 @@ import com.itmo.prog_lab5_8.common.commands.Command;
 import com.itmo.prog_lab5_8.common.util.ChannelWrapper;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
@@ -14,16 +13,15 @@ import java.nio.channels.SocketChannel;
 import java.util.*;
 
 public class ServerReceiver {
-    private int port;
     protected ServerSocketChannel ssc;
     protected Selector selector;
     public ServerReceiver(int port) {
         try {
             selector = Selector.open();
-            ServerSocketChannel serverChannel = ServerSocketChannel.open();
-            serverChannel.bind(new InetSocketAddress(port));
-            serverChannel.configureBlocking(false);
-            serverChannel.register(selector, SelectionKey.OP_ACCEPT);
+            ssc = ServerSocketChannel.open();
+            ssc.bind(new InetSocketAddress(port));
+            ssc.configureBlocking(false);
+            ssc.register(selector, SelectionKey.OP_ACCEPT);
 
             System.out.println("Сервер запущен на порту " + port);
         } catch (IOException e) {
@@ -84,9 +82,5 @@ public class ServerReceiver {
             System.out.println("некорректное поведение от пользователя " + clientChannel.getRemoteAddress());
             clientChannel.close();
         }
-    }
-
-    protected static class ClientData {
-        public Command command;
     }
 }
