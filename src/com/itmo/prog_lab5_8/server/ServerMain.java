@@ -7,7 +7,7 @@ import com.itmo.prog_lab5_8.server.collection.DragonsXmlConverter;
 import javax.xml.bind.JAXBException;
 import java.io.File;
 
-public class Main {
+public class ServerMain {
     private final static String path = ".testFiles/test.xml";
     private final static int port = 36666;
     public static void main(String[] args) {

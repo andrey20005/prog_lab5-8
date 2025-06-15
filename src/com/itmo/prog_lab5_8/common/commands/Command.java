@@ -28,10 +28,6 @@ public interface Command extends Serializable {
     static Serializable byteBufferToSerializable(ByteBuffer buffer) throws IOException, ClassNotFoundException {
         byte[] array = new byte[buffer.remaining()];
         buffer.get(array);
-//        for (int i = 0; i < 1000; i++) {
-//            System.out.print(array[0]);
-//        }
-//        System.out.println();
         try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(array))) {
             return (Serializable) ois.readObject();
         }

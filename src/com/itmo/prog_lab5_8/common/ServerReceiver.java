@@ -1,96 +1,89 @@
 package com.itmo.prog_lab5_8.common;
 
 import com.itmo.prog_lab5_8.common.commands.Command;
+import com.itmo.prog_lab5_8.common.util.ChannelWrapper;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.net.InetSocketAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.util.Set;
+import java.util.*;
 
 public class ServerReceiver {
     private int port;
     protected ServerSocketChannel ssc;
     protected Selector selector;
     public ServerReceiver(int port) {
-        this.port = port;
         try {
-            ssc = ServerSocketChannel.open();
-            try {
-                ssc.bind(new InetSocketAddress(port));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            ssc.configureBlocking(false);
             selector = Selector.open();
-            ssc.register(selector, SelectionKey.OP_ACCEPT);
+            ServerSocketChannel serverChannel = ServerSocketChannel.open();
+            serverChannel.bind(new InetSocketAddress(port));
+            serverChannel.configureBlocking(false);
+            serverChannel.register(selector, SelectionKey.OP_ACCEPT);
+
+            System.out.println("Сервер запущен на порту " + port);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
+    private Invoker invoker;
     public void run(Invoker invoker) {
+        this.invoker = invoker;
         while (true) {
             try {
                 selector.select();
-                Set<SelectionKey> keys = selector.selectedKeys();
-                for (SelectionKey key : keys) {
-                    System.out.println(key.toString() + " " + key.isAcceptable() + " " + key.isReadable() + " " + key.isWritable());
-                    if (key.isValid()) {
-                        if (key.isAcceptable()) doAccept(key, invoker);
-                        if (key.isReadable()) doRead(key, invoker);
-                        if (key.isWritable()) doWrite(key, invoker);
+                Set<SelectionKey> selectedKeys = selector.selectedKeys();
+                Iterator<SelectionKey> iter = selectedKeys.iterator();
+
+                ByteBuffer buffer = ByteBuffer.allocate(10);
+
+                while (iter.hasNext()) {
+                    SelectionKey key = iter.next();
+                    iter.remove();
+
+                    if (key.isAcceptable()) {
+                        doAccept(selector, key);
+                    } else if (key.isReadable()) {
+                        doRead(key, buffer);
                     }
                 }
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
     }
 
-    protected void doAccept(SelectionKey key, Invoker invoker) throws IOException {
-        System.out.println("accept");
-        ServerSocketChannel ssc = (ServerSocketChannel) key.channel();
-        SocketChannel sc = ssc.accept();
-        if (sc == null) return;
-//        ClientData clientData = new ClientData();
-//        key.attach(clientData);
-//        System.out.println(key.attachment());
-        sc.configureBlocking(false);
-        sc.register(key.selector(), SelectionKey.OP_READ);
+    protected void doAccept(Selector selector, SelectionKey key) throws IOException {
+        ServerSocketChannel serverChannel = (ServerSocketChannel) key.channel();
+        SocketChannel clientChannel = serverChannel.accept();
+        clientChannel.configureBlocking(false);
+        clientChannel.register(selector, SelectionKey.OP_READ);
+        System.out.println("Принято соединение: " + clientChannel.getRemoteAddress());
     }
 
-    protected void doRead(SelectionKey key, Invoker invoker) throws IOException {
-        SocketChannel sc = (SocketChannel) key.channel();
-        System.out.println("read");
-        ClientData clientData = new ClientData();
-        key.attach(clientData);
+    protected void doRead(SelectionKey key, ByteBuffer buffer) throws IOException {
+        SocketChannel clientChannel = (SocketChannel) key.channel();
+        buffer.clear();
+
+        ChannelWrapper wrapper = new ChannelWrapper(clientChannel);
         try {
-            ByteBuffer buffer = ByteBuffer.allocate(10000);
-            sc.read(buffer);
-            buffer.flip();
-            clientData.command = (Command) Command.byteBufferToSerializable(buffer);
-//            System.out.println(command);
+            Command command = (Command) wrapper.readObject();
+            System.out.println(
+                    "поучена команда от пользователя " + clientChannel.getRemoteAddress() + ":\n    " + command
+            );
+            command.execute(invoker);
+            wrapper.writeObject(command);
+            System.out.println("конец взаимодействия с " + clientChannel.getRemoteAddress());
+            clientChannel.close();
         } catch (ClassNotFoundException e) {
-            sc.close();
-            return;
+            System.out.println("некорректное поведение от пользователя " + clientChannel.getRemoteAddress());
+            clientChannel.close();
         }
-        clientData.command.execute(invoker);
-        sc.register(key.selector(), SelectionKey.OP_WRITE);
-    }
-
-    protected void doWrite(SelectionKey key, Invoker invoker) throws IOException {
-        SocketChannel sc = (SocketChannel) key.channel();
-        System.out.println("write");
-        ClientData clientData = (ClientData) key.attachment();
-        ByteBuffer buffer = Command.serializableToByteBuffer(clientData.command);
-        sc.write(buffer);
     }
 
     protected static class ClientData {
