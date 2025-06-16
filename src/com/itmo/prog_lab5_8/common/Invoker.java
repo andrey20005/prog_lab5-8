@@ -1,8 +1,6 @@
 package com.itmo.prog_lab5_8.common;
 
-import com.itmo.prog_lab5_8.common.models.Color;
 import com.itmo.prog_lab5_8.common.models.Dragon;
-import com.itmo.prog_lab5_8.common.models.DragonCharacter;
 
 public interface Invoker {
     /**

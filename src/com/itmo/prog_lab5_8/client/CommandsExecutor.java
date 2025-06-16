@@ -1,17 +1,12 @@
 package com.itmo.prog_lab5_8.client;
 
 import com.itmo.prog_lab5_8.client.construcrors.*;
-import com.itmo.prog_lab5_8.client.io.FileInput;
 import com.itmo.prog_lab5_8.client.io.TextIO;
-import com.itmo.prog_lab5_8.client.io.TextIOManager;
 import com.itmo.prog_lab5_8.common.ClientRequester;
 import com.itmo.prog_lab5_8.common.commands.Command;
-import com.itmo.prog_lab5_8.common.commands.Echo;
 
 import java.io.IOException;
-import java.util.ArrayDeque;
 import java.util.Arrays;
-import java.util.Deque;
 
 public class CommandsExecutor {
     private final ClientRequester requester;
