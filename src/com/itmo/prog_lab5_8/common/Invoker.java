@@ -12,6 +12,7 @@ public interface Invoker {
     void clear();
     void removeById(long id) throws IllegalArgumentException;
     String show();
+    String info();
     boolean checkId(long id);
     void update(Dragon dragon);
     void save();

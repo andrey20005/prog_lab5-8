@@ -32,6 +32,11 @@ public class ServerInvoker implements Invoker {
     }
 
     @Override
+    public String info() {
+        return dragons.getInfo();
+    }
+
+    @Override
     public boolean checkId(long id) {
         return dragons.checkId(id);
     }

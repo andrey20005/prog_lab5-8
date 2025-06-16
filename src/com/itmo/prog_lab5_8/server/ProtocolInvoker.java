@@ -43,6 +43,12 @@ public class ProtocolInvoker implements Invoker {
     }
 
     @Override
+    public String info() {
+        ProtocolInvoker.smartPrint("info");
+        return invoker.info();
+    }
+
+    @Override
     public boolean checkId(long id) {
         ProtocolInvoker.smartPrint("have_dragon", id);
         return invoker.checkId(id);
