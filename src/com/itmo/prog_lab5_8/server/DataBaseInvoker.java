@@ -37,19 +37,28 @@ public class DataBaseInvoker implements Invoker {
 
     @Override
     public void clear(Account account) throws IncorrectRequestException {
-
+        try {
+            db.clear(account);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new IncorrectRequestException("ошибка при работе с сервера");
+        }
     }
 
     @Override
     public void removeById(long id, Account account) throws IncorrectRequestException {
-
+        try {
+            db.removeById(id, account);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new IncorrectRequestException("ошибка при работе с сервера");
+        }
     }
 
     @Override
     public String show(Account account) throws IncorrectRequestException {
         try {
             return db.getDragons(account).toString();
-//            return Arrays.toString(db.getDragons(account));
         } catch (SQLException e) {
             e.printStackTrace();
             throw new IncorrectRequestException("ошибка при работе с сервера");
@@ -58,12 +67,21 @@ public class DataBaseInvoker implements Invoker {
 
     @Override
     public String info(Account account) throws IncorrectRequestException {
-        return "";
+        try {
+            return "Логин: " + account.login + "\nколичество драконов: " + db.getDragons(account).size();
+        } catch (SQLException e) {
+            throw new IncorrectRequestException("ошибка при работе с сервера");
+        }
     }
 
     @Override
     public void update(Dragon dragon, Account account) throws IncorrectRequestException {
-
+        try {
+            db.update(dragon, account);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new IncorrectRequestException("ошибка при работе с сервера");
+        }
     }
 
     @Override

@@ -213,4 +213,84 @@ public class DataBase {
         }
         return dragons;
     }
+
+    public void removeById(long id, Account account) throws SQLException, IncorrectRequestException {
+        if (!checkId(id, account)) throw new IncorrectRequestException("нет дракона с таким id");
+        try (
+                PreparedStatement statement = connection.prepareStatement("delete from prog_dragon where id = ? and account = ?;")
+                ) {
+            statement.setLong(1, id);
+            statement.setString(2, account.login);
+            statement.executeUpdate();
+        }
+    }
+
+    public boolean checkId(long id, Account account) throws IncorrectRequestException, SQLException {
+        if (!checkAccount(account)) throw new IncorrectRequestException("неверный пароль");
+        try (
+                PreparedStatement statement = connection.prepareStatement("select * from prog_dragon where id = ? and account = ?;")
+                ) {
+            statement.setLong(1, id);
+            statement.setString(2, account.login);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) return true;
+            return false;
+        }
+    }
+
+    public void clear(Account account) throws SQLException, IncorrectRequestException {
+        if (!checkAccount(account)) throw new IncorrectRequestException("неверный пароль");
+        try (
+                PreparedStatement statement = connection.prepareStatement("delete from prog_dragon where account = ?");
+                ) {
+            statement.setString(1, account.login);
+            statement.executeUpdate();
+        }
+    }
+
+    public void update(Dragon dragon, Account account) throws SQLException, IncorrectRequestException {
+        if (!checkId(dragon.getId(), account)) throw new IncorrectRequestException("нет дракона с таким id");
+        if (dragon.haveKiller()) {
+            try (
+                    PreparedStatement statement = connection.prepareStatement(
+                            "update prog_dragon " +
+                                    "set name = ?, coordinates_x = ?, coordinates_y = ?, creation_date = ?, age = ?, " +
+                                    "description = ?, weight = ?, character = ?, killer = ? " +
+                                    "where id = ?"
+                    )
+            ) {
+                statement.setString(1, dragon.getName());
+                statement.setFloat(2, dragon.getCoordinates().getX());
+                statement.setFloat(3, dragon.getCoordinates().getY());
+                statement.setTimestamp(4, Timestamp.valueOf(dragon.getCreationDate().toLocalDateTime()));
+                statement.setInt(5, dragon.getAge());
+                statement.setString(6, dragon.getDescription());
+                statement.setFloat(7, dragon.getWeight());
+                statement.setString(8, dragon.getCharacter().toString());
+                statement.setLong(9, addPerson(dragon.getKiller()));
+                statement.setLong(10, dragon.getId());
+                statement.executeUpdate();
+            }
+        } else {
+            try (
+                    PreparedStatement statement = connection.prepareStatement(
+                        "update prog_dragon " +
+                            "set name = ?, coordinates_x = ?, coordinates_y = ?, creation_date = ?, age = ?, " +
+                            "description = ?, weight = ?, character = ?, killer = null " +
+                            "where id = ?"
+                    )
+                    ) {
+                statement.setString(1, dragon.getName());
+                statement.setFloat(2, dragon.getCoordinates().getX());
+                statement.setFloat(3, dragon.getCoordinates().getY());
+                statement.setTimestamp(4, Timestamp.valueOf(dragon.getCreationDate().toLocalDateTime()));
+                statement.setInt(5, dragon.getAge());
+                statement.setString(6, dragon.getDescription());
+                statement.setFloat(7, dragon.getWeight());
+                statement.setString(8, dragon.getCharacter().toString());
+                statement.setLong(9, dragon.getId());
+                statement.executeUpdate();
+            }
+        }
+    }
 }

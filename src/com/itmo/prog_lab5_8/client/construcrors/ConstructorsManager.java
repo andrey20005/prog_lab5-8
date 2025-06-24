@@ -32,7 +32,7 @@ public class ConstructorsManager implements CommandConstructor{
         try {
             return constructors.get(input[0]).getCommand(input, io);
         } catch (NullPointerException e) {
-            throw new IllegalArgumentException("команда " + input[0] + " не найдена");
+            throw new IncorrectRequestException("команда " + input[0] + " не найдена");
         }
     }
 
