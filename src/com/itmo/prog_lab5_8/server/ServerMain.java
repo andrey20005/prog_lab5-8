@@ -24,8 +24,10 @@ public class ServerMain {
         } catch (SQLException e) {
             throw new RuntimeException("не получилось подключиться к бд", e);
         }
-        ServerReceiver sr = new ServerReceiver(port);
-        System.out.println("сервер поднят\n" + "порт: " + port);
-        sr.run(invoker);
+//        ServerReceiver sr = new ServerReceiver(port);
+//        System.out.println("сервер поднят\n" + "порт: " + port);
+//        sr.run(invoker);
+        MultiprocessorServer server = new MultiprocessorServer(port, invoker);
+        server.run();
     }
 }
