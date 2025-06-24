@@ -6,7 +6,6 @@ import com.itmo.prog_lab5_8.common.Account;
 import com.itmo.prog_lab5_8.common.commands.Command;
 import com.itmo.prog_lab5_8.common.commands.Update;
 import com.itmo.prog_lab5_8.common.models.Dragon;
-import com.itmo.prog_lab5_8.common.models.DragonCharacter;
 
 public class UpdateConstructor extends AbstractCommandConstructor {
     private final Account account;

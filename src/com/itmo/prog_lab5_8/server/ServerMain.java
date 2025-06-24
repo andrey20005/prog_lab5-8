@@ -3,7 +3,6 @@ package com.itmo.prog_lab5_8.server;
 import com.itmo.prog_lab5_8.common.Invoker;
 import com.itmo.prog_lab5_8.common.ServerReceiver;
 
-import javax.xml.bind.JAXBException;
 import java.sql.SQLException;
 
 public class ServerMain {

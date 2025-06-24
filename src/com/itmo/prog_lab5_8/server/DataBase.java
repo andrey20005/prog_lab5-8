@@ -3,12 +3,10 @@ package com.itmo.prog_lab5_8.server;
 
 import com.itmo.prog_lab5_8.common.Account;
 import com.itmo.prog_lab5_8.common.IncorrectRequestException;
-import com.itmo.prog_lab5_8.common.Invoker;
 import com.itmo.prog_lab5_8.common.models.*;
 
 import java.sql.*;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -69,11 +67,7 @@ public class DataBase {
 
     public void addDragon(Dragon dragon, Account account) throws SQLException, IncorrectRequestException {
         if (!checkAccount(account)) throw new IncorrectRequestException("неверный пароль");
-        try {
-            dragon.isCorrect();
-        } catch (IllegalArgumentException e) {
-            throw new IncorrectRequestException(e.getMessage());
-        }
+        dragon.isCorrect();
         if (dragon.haveKiller()) {
             try (
                     PreparedStatement statement = connection.prepareStatement("insert into prog_dragon values (default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")
@@ -233,15 +227,14 @@ public class DataBase {
             statement.setLong(1, id);
             statement.setString(2, account.login);
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) return true;
-            return false;
+            return resultSet.next();
         }
     }
 
     public void clear(Account account) throws SQLException, IncorrectRequestException {
         if (!checkAccount(account)) throw new IncorrectRequestException("неверный пароль");
         try (
-                PreparedStatement statement = connection.prepareStatement("delete from prog_dragon where account = ?");
+                PreparedStatement statement = connection.prepareStatement("delete from prog_dragon where account = ?")
                 ) {
             statement.setString(1, account.login);
             statement.executeUpdate();
@@ -249,6 +242,7 @@ public class DataBase {
     }
 
     public void update(Dragon dragon, Account account) throws SQLException, IncorrectRequestException {
+        dragon.isCorrect();
         if (!checkId(dragon.getId(), account)) throw new IncorrectRequestException("нет дракона с таким id");
         if (dragon.haveKiller()) {
             try (

@@ -6,8 +6,6 @@ import com.itmo.prog_lab5_8.common.Invoker;
 import com.itmo.prog_lab5_8.common.models.Dragon;
 
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 public class DataBaseInvoker implements Invoker {
     private final DataBase db;
@@ -27,6 +25,7 @@ public class DataBaseInvoker implements Invoker {
 
     @Override
     public void add(Dragon dragon, Account account) throws IncorrectRequestException {
+        dragon.isCorrect();
         try {
             db.addDragon(dragon, account);
         } catch (SQLException e) {
@@ -76,6 +75,7 @@ public class DataBaseInvoker implements Invoker {
 
     @Override
     public void update(Dragon dragon, Account account) throws IncorrectRequestException {
+        dragon.isCorrect();
         try {
             db.update(dragon, account);
         } catch (SQLException e) {

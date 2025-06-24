@@ -1,7 +1,5 @@
 package com.itmo.prog_lab5_8.common.models;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import java.io.Serializable;
 
 public class Person implements Serializable {
@@ -10,8 +8,6 @@ public class Person implements Serializable {
     private Color eyeColor; //Поле не может быть null
     private Color hairColor; //Поле может быть null
     private Location location; //Поле не может быть null
-
-    public Person() {}
 
     public Person(String name, double height, Color eyeColor, Color hairColor, Location location) {
         setName(name);

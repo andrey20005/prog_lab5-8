@@ -1,8 +1,7 @@
 package com.itmo.prog_lab5_8.common.models;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import com.itmo.prog_lab5_8.common.IncorrectRequestException;
+
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Objects;
@@ -17,9 +16,6 @@ public class Dragon implements Comparable<Dragon>, Serializable {
     private Float weight; //Значение поля должно быть больше 0, Поле не может быть null
     private DragonCharacter character; //Поле может быть null
     private Person killer; //Поле может быть null
-
-    // нужно для jaxb
-    public Dragon() {}
 
     public Dragon(Long id,
                   String name,
@@ -75,24 +71,23 @@ public class Dragon implements Comparable<Dragon>, Serializable {
 
     public boolean haveKiller() {return killer != null;}
 
-    public boolean isCorrect() throws IllegalArgumentException {
-        if (Objects.equals(getName(), null)) throw new IllegalArgumentException("имя задано некорректно");
-        if (Objects.equals(getCoordinates().getX(), null)) throw new IllegalArgumentException("координата X задана некорректно");
-        if (Objects.equals(getCoordinates().getY(), null)) throw new IllegalArgumentException("координата Y задана некорректно");
-        if (Objects.equals(getCreationDate(), null)) throw new IllegalArgumentException("время создания задано некорректно");
-        if (getAge() <= 0) throw new IllegalArgumentException("возраст задан некорректно");
-        if (Objects.equals(getWeight(), null) || getWeight() <= 0) throw new IllegalArgumentException("вес задан некорректно");
-        if (Objects.equals(getCharacter(), null)) throw new IllegalArgumentException("характер задан некорректно");
+    public void isCorrect() throws IncorrectRequestException {
+        if (Objects.equals(getName(), null)) throw new IncorrectRequestException("имя задано некорректно");
+        if (Objects.equals(getCoordinates().getX(), null)) throw new IncorrectRequestException("координата X задана некорректно");
+        if (Objects.equals(getCoordinates().getY(), null)) throw new IncorrectRequestException("координата Y задана некорректно");
+        if (Objects.equals(getCreationDate(), null)) throw new IncorrectRequestException("время создания задано некорректно");
+        if (getAge() <= 0) throw new IncorrectRequestException("возраст задан некорректно");
+        if (Objects.equals(getWeight(), null) || getWeight() <= 0) throw new IncorrectRequestException("вес задан некорректно");
+        if (Objects.equals(getCharacter(), null)) throw new IncorrectRequestException("характер задан некорректно");
         if (!Objects.equals(getKiller(), null)) {
-            if (Objects.equals(getKiller().getName(), null)) throw new IllegalArgumentException("имя убийцы задано некорректно");
-            if (getKiller().getHeight() <= 0) throw new IllegalArgumentException("рост убийцы задан некорректно");
-            if (Objects.equals(getKiller().getEyeColor(), null)) throw new IllegalArgumentException("цвет глаз убийцы задано некорректно");
-            if (Objects.equals(getKiller().getHairColor(), null)) throw new IllegalArgumentException("цвет волос убийцы задан некорректно");
-            if (Objects.equals(getKiller().getLocation(), null)) throw new IllegalArgumentException("локация убийцы задана некорректно");
-            if (Objects.equals(getKiller().getLocation().getY(), null)) throw new IllegalArgumentException("Y локации убийцы задано некорректно");
-            if (Objects.equals(getKiller().getLocation().getName(), null)) throw new IllegalArgumentException("названия локации убийцы задано некорректно");
+            if (Objects.equals(getKiller().getName(), null)) throw new IncorrectRequestException("имя убийцы задано некорректно");
+            if (getKiller().getHeight() <= 0) throw new IncorrectRequestException("рост убийцы задан некорректно");
+            if (Objects.equals(getKiller().getEyeColor(), null)) throw new IncorrectRequestException("цвет глаз убийцы задано некорректно");
+            if (Objects.equals(getKiller().getHairColor(), null)) throw new IncorrectRequestException("цвет волос убийцы задан некорректно");
+            if (Objects.equals(getKiller().getLocation(), null)) throw new IncorrectRequestException("локация убийцы задана некорректно");
+            if (Objects.equals(getKiller().getLocation().getY(), null)) throw new IncorrectRequestException("Y локации убийцы задано некорректно");
+            if (Objects.equals(getKiller().getLocation().getName(), null)) throw new IncorrectRequestException("названия локации убийцы задано некорректно");
         }
-        return true;
     }
 
     @Override

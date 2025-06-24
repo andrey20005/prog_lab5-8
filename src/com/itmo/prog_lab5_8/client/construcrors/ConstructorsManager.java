@@ -18,7 +18,7 @@ public class ConstructorsManager implements CommandConstructor{
 
     public String getHelp() {
         StringBuilder help = new StringBuilder();
-        constructors.forEach((name, constructor) -> help.append(constructor.getDescription() + "\n"));
+        constructors.forEach((name, constructor) -> help.append(constructor.getDescription()).append("\n"));
         return help.toString();
     }
 
@@ -44,7 +44,7 @@ public class ConstructorsManager implements CommandConstructor{
     @Override
     public String getDescription() {
         StringBuilder help = new StringBuilder();
-        constructors.forEach((name, constructor) -> help.append(constructor.getDescription() + "\n"));
+        constructors.forEach((name, constructor) -> help.append(constructor.getDescription()).append("\n"));
         return help.toString();
     }
 }

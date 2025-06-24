@@ -3,9 +3,7 @@ package com.itmo.prog_lab5_8.common.commands;
 import com.itmo.prog_lab5_8.common.Account;
 import com.itmo.prog_lab5_8.common.IncorrectRequestException;
 import com.itmo.prog_lab5_8.common.Invoker;
-import com.itmo.prog_lab5_8.common.models.Color;
 import com.itmo.prog_lab5_8.common.models.Dragon;
-import com.itmo.prog_lab5_8.common.models.DragonCharacter;
 
 public class Update extends AbstractStandardCommand {
     private final Dragon dragon;
