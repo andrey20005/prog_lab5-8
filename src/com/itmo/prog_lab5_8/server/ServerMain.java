@@ -1,30 +1,32 @@
 package com.itmo.prog_lab5_8.server;
 
+import com.itmo.prog_lab5_8.common.Invoker;
 import com.itmo.prog_lab5_8.common.ServerReceiver;
-import com.itmo.prog_lab5_8.server.collection.Dragons;
-import com.itmo.prog_lab5_8.server.collection.DragonsXmlConverter;
 
 import javax.xml.bind.JAXBException;
-import java.io.File;
+import java.sql.SQLException;
 
 public class ServerMain {
-    private final static String path = ".testFiles/test.xml";
-    private final static int port = 36666;
+    /**
+     * @param args:
+     *            0 - port
+     *            1 - url to db (jdbc:postgresql://localhost:54327/studs)
+     *            2 - user
+     *            3 - password
+     */
     public static void main(String[] args) {
+        int port = Integer.parseInt(args[0]);
+        String url = args[1];
+        String user = args[2];
+        String password = args[3];
+        Invoker invoker;
         try {
-            Dragons dragons;
-            if (!new File(path).exists()) {
-                System.out.println("будет создан новый файл");
-                dragons = new Dragons(path);
-            } else {
-                dragons = DragonsXmlConverter.fromXMLFile(path);
-            }
-            ServerReceiver sr = new ServerReceiver(port);
-            System.out.println("сервер поднят\n" + "порт: " + port);
-            sr.run(new ProtocolInvoker(new ServerInvoker(dragons)));
-        } catch (JAXBException e) {
-            System.out.println("не получилось открыть файл, скорее всего в нем допущена ошибка");
-            throw new RuntimeException(e);
+            invoker = new DataBaseInvoker(new DataBase(url, user, password));
+        } catch (SQLException e) {
+            throw new RuntimeException("не получилось подключиться к бд", e);
         }
+        ServerReceiver sr = new ServerReceiver(port);
+        System.out.println("сервер поднят\n" + "порт: " + port);
+        sr.run(invoker);
     }
 }

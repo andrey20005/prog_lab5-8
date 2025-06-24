@@ -2,40 +2,40 @@ create table prog_account (
     login text primary key not null,
     password_hash text not null
 );
+
 create table prog_color (
     color text primary key
 );
+insert into prog_color values ('RED'), ('BLACK'), ('WHITE'), ('BROWN'), ('BLUE'), ('ORANGE');
+
 create table prog_dragon_character (
     character text primary key
 );
-create sequence prog_location_id
-    INCREMENT 1
-    START 1
-    CACHE 10;
+insert into prog_dragon_character values ('CUTTING'), ('WISE'), ('CHAOTIC'), ('FICKLE');
+
 create table prog_location (
-    id integer primary key default nextval('prog_location_id'),
+    id integer primary key,
     name text not null,
     x integer not null,
     y integer not null
 );
-create sequence prog_person_id
-    INCREMENT 1
-    START 1
-    CACHE 10;
+
 create table prog_person (
-    id integer primary key default nextval('prog_person_id'),
+    id integer primary key,
     name text not null,
     height double precision not null,
     eye_color text references prog_color not null,
     hair_color text references prog_color not null,
     location integer references prog_location not null
 );
+
 create sequence prog_dragon_id
     INCREMENT 1
     START 1
     CACHE 10;
 create table prog_dragon (
     id bigint primary key default nextval('prog_dragon_id'),
+    account text references prog_account not null,
     name text not null,
     coordinates_x real not null,
     coordinates_y real not null,

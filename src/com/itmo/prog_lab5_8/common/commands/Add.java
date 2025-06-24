@@ -1,24 +1,28 @@
 package com.itmo.prog_lab5_8.common.commands;
 
+import com.itmo.prog_lab5_8.common.Account;
+import com.itmo.prog_lab5_8.common.IncorrectRequestException;
 import com.itmo.prog_lab5_8.common.Invoker;
 import com.itmo.prog_lab5_8.common.models.Color;
 import com.itmo.prog_lab5_8.common.models.Dragon;
 import com.itmo.prog_lab5_8.common.models.DragonCharacter;
 
 public class Add extends AbstractStandardCommand {
-    private Dragon dragon;
+    private final Dragon dragon;
+    private final Account account;
 
-    public Add(Dragon dragon) {
+    public Add(Dragon dragon, Account account) {
         this.dragon = dragon;
+        this.account = account;
     }
 
     @Override
     public void execute(Invoker invoker) {
         try {
-            invoker.add(dragon);
+            invoker.add(dragon, account);
             result = "в коллекцию успешно добавлен новый дракон";
-        } catch (IllegalArgumentException e) {
-            result = "переданные аргументы не корректны: \n" + e.getMessage();
+        } catch (IncorrectRequestException e) {
+            result = e.getMessage();
         }
     }
 }

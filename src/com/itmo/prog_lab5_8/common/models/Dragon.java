@@ -7,12 +7,10 @@ import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Dragon implements Comparable<Dragon>, Serializable {
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
-    @XmlJavaTypeAdapter(ZonedDateTimeAdapter.class)
     private ZonedDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
     private int age; //Значение поля должно быть больше 0
     private String description; //Поле может быть null
@@ -74,6 +72,8 @@ public class Dragon implements Comparable<Dragon>, Serializable {
                 new Location(killerLocationX, killerLocationY, killerLocationName)
                 );
     }
+
+    public boolean haveKiller() {return killer != null;}
 
     public boolean isCorrect() throws IllegalArgumentException {
         if (Objects.equals(getName(), null)) throw new IllegalArgumentException("имя задано некорректно");
@@ -186,4 +186,6 @@ public class Dragon implements Comparable<Dragon>, Serializable {
     public void setKiller(Person killer) {
         this.killer = killer;
     }
+
+
 }

@@ -4,6 +4,10 @@ import com.itmo.prog_lab5_8.client.construcrors.ConstructorsManager;
 import com.itmo.prog_lab5_8.client.io.FileInput;
 import com.itmo.prog_lab5_8.client.io.TextIO;
 import com.itmo.prog_lab5_8.client.io.TextIOManager;
+import com.itmo.prog_lab5_8.common.Account;
+import com.itmo.prog_lab5_8.common.ClientRequester;
+import com.itmo.prog_lab5_8.common.IncorrectRequestException;
+import com.itmo.prog_lab5_8.common.commands.CheckAccount;
 
 import java.io.IOException;
 import java.util.ArrayDeque;
@@ -16,12 +20,16 @@ public class LocalCommands {
     private final Map<String, LocalCommand> commands;
     private final CommandsExecutor executor;
     private final ConstructorsManager constructorsManager;
+    private final ClientRequester requester;
+    private final Account account;
 
     private record LocalCommand(String name, String help, BiConsumer<String[], TextIO> command) {}
 
-    public LocalCommands(CommandsExecutor executor, ConstructorsManager constructorsManager) {
+    public LocalCommands(CommandsExecutor executor, ConstructorsManager constructorsManager, ClientRequester requester, Account account) {
         this.executor = executor;
         this.constructorsManager = constructorsManager;
+        this.requester = requester;
+        this.account = account;
         commands = new HashMap<>();
         commands.put(
                 "help",
@@ -38,6 +46,14 @@ public class LocalCommands {
                         "execute_script file_name: считать и исполнить скрипт из указанного файла. В скрипте должны содержатся" +
                                 "команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.",
                         this::executeScript
+                )
+        );
+        commands.put(
+                "login",
+                new LocalCommand(
+                        "login",
+                        "login logint password: авторизоваться в системе",
+                        this::login
                 )
         );
     }
@@ -74,7 +90,7 @@ public class LocalCommands {
             while (newIO.ready()) {
                 try {
                     executor.executeNextCommand(newIO);
-                } catch (IllegalArgumentException e) {
+                } catch (IncorrectRequestException e) {
                     io.println(e.getMessage());
                     break;
                 }
@@ -83,5 +99,26 @@ public class LocalCommands {
             io.println("файл с таким именем не найден: " + input[1]);
         }
         paths.pop();
+    }
+
+    private void login(String[] input, TextIO io) {
+        if (input.length != 3) {
+            io.println("команда принимает два аргумента: login password");
+            return;
+        }
+        try {
+            boolean isAccountCorrect = ((CheckAccount) requester.request(new CheckAccount(new Account(input[1], input[2])))).isAccountCorrect;
+            if (isAccountCorrect) {
+                account.login = input[1];
+                account.password = input[2];
+                io.println("авторизация прошла успешно");
+            } else {
+                io.println("авторизация не прошла успешно");
+            }
+        } catch (ClassNotFoundException e) {
+            io.println("сервер отработал некорректно");
+        } catch (IOException e) {
+            io.println("ошибка при работе с сервером");
+        }
     }
 }

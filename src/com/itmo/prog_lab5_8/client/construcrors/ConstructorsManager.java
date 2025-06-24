@@ -1,6 +1,7 @@
 package com.itmo.prog_lab5_8.client.construcrors;
 
 import com.itmo.prog_lab5_8.client.io.TextIO;
+import com.itmo.prog_lab5_8.common.IncorrectRequestException;
 import com.itmo.prog_lab5_8.common.commands.Command;
 
 import java.util.HashMap;
@@ -26,7 +27,7 @@ public class ConstructorsManager implements CommandConstructor{
     }
 
     @Override
-    public Command getCommand(String[] input, TextIO io) throws IllegalArgumentException {
+    public Command getCommand(String[] input, TextIO io) throws IncorrectRequestException {
         if(input.length == 0) throw new IllegalArgumentException("запрос пустой");
         try {
             return constructors.get(input[0]).getCommand(input, io);

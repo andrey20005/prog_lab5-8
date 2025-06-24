@@ -4,7 +4,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import java.io.Serializable;
 
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Location implements Serializable {
     private int x;
     private Integer y = 0; //Поле не может быть null

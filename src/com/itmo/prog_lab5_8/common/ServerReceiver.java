@@ -38,8 +38,6 @@ public class ServerReceiver {
                 Set<SelectionKey> selectedKeys = selector.selectedKeys();
                 Iterator<SelectionKey> iter = selectedKeys.iterator();
 
-                ByteBuffer buffer = ByteBuffer.allocate(10);
-
                 while (iter.hasNext()) {
                     SelectionKey key = iter.next();
                     iter.remove();
@@ -47,7 +45,7 @@ public class ServerReceiver {
                     if (key.isAcceptable()) {
                         doAccept(selector, key);
                     } else if (key.isReadable()) {
-                        doRead(key, buffer);
+                        doRead(key);
                     }
                 }
             } catch (IOException e) {
@@ -64,9 +62,8 @@ public class ServerReceiver {
         System.out.println("Принято соединение: " + clientChannel.getRemoteAddress());
     }
 
-    protected void doRead(SelectionKey key, ByteBuffer buffer) throws IOException {
+    protected void doRead(SelectionKey key) throws IOException {
         SocketChannel clientChannel = (SocketChannel) key.channel();
-        buffer.clear();
 
         ChannelWrapper wrapper = new ChannelWrapper(clientChannel);
         try {

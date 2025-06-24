@@ -3,16 +3,13 @@ package com.itmo.prog_lab5_8.common;
 import com.itmo.prog_lab5_8.common.models.Dragon;
 
 public interface Invoker {
-    /**
-     * @param dragon - id - is ignored
-     */
-    void add(Dragon dragon) throws IllegalArgumentException;
-    void clear();
-    void removeById(long id) throws IllegalArgumentException;
-    String show();
-    String info();
-    boolean checkId(long id);
-    void update(Dragon dragon);
-    void save();
+    void registration(Account account) throws IncorrectRequestException;
+    void add(Dragon dragon, Account account) throws IncorrectRequestException;
+    void clear(Account account) throws IncorrectRequestException;
+    void removeById(long id, Account account) throws IncorrectRequestException;
+    String show(Account account) throws IncorrectRequestException;
+    String info(Account account) throws IncorrectRequestException;
+    void update(Dragon dragon, Account account) throws IncorrectRequestException;
     default String echo(String text) {return text;}
+    boolean checkAccount(Account account) throws IncorrectRequestException;
 }
