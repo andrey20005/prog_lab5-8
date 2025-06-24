@@ -25,6 +25,14 @@ public class DataBase {
         connection = DriverManager.getConnection(url, user, password);
     }
 
+    public DataBase newConnection() throws SQLException {
+        return new DataBase(url, user, password);
+    }
+
+    public void close() throws SQLException {
+        connection.close();
+    }
+
     private void checkConnection() throws SQLException {
         if (connection.isClosed()) {
             connection = DriverManager.getConnection(url, user, password);

@@ -16,17 +16,12 @@ public class ClientRequester {
         this.port = port;
     }
     public Command request(Command command) throws ClassNotFoundException, IOException {
-        try {
-            SocketChannel clientChannel = SocketChannel.open();
-            clientChannel.connect(new InetSocketAddress(host, port));
+        SocketChannel clientChannel = SocketChannel.open();
+        clientChannel.connect(new InetSocketAddress(host, port));
 
-            ChannelWrapper wrapper = new ChannelWrapper(clientChannel);
-            wrapper.writeObject(command);
-            return (Command) wrapper.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw e;
-        }
+        ChannelWrapper wrapper = new ChannelWrapper(clientChannel);
+        wrapper.writeObject(command);
+        return (Command) wrapper.readObject();
     }
 
     public void setHost(String host) {

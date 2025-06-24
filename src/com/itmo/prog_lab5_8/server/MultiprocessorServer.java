@@ -51,7 +51,7 @@ public class MultiprocessorServer {
                         reader.submit(() -> read(key));
                     }
                 }
-                reader.awaitTermination(10000, TimeUnit.NANOSECONDS);
+                reader.awaitTermination(100, TimeUnit.MILLISECONDS);
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {

@@ -11,8 +11,10 @@ public class Client {
     public final ClientRequester requester;
     public final CommandsExecutor executor;
     public final Account account;
+    private final int port;
 
     public Client(String host, int port) {
+        this.port = port;
         account = new Account("not init", "1");
         requester = new ClientRequester(host, port);
         executor = new CommandsExecutor(requester, account);
@@ -25,7 +27,7 @@ public class Client {
         } catch (IncorrectRequestException e) {
             console.println(e.getMessage());
         } catch (IOException e) {
-            console.println("с подключением к серверу произошли проблемы");
+            console.println("с подключением к серверу произошли проблемы. port: " + port);
         } catch (ClassNotFoundException e) {
             console.println("сервер, почему-то отработал некорректно");
         }
